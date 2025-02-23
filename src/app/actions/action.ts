@@ -17,3 +17,27 @@ export const newMajor = async (formData: FormData) => {
     return { status: false, message: "major not created" };
   }
 };
+
+export const deleteMajor = async (id: string) => {
+  try {
+    await connectiondb();
+    await Major.findByIdAndDelete(id);
+    revalidateTag("majors");
+    return { status: true, message: "major deleted successfully" };
+  } catch (error) {
+    return { status: false, message: "major not deleted" };
+  }
+};
+
+export const updateMajor = async (id: string, formData: FormData) => {
+  try {
+    await connectiondb();
+    await Major.findByIdAndUpdate(id, {
+      name: formData.get("majorName") as string,
+    });
+    revalidateTag("majors");
+    return { status: true, message: "major updated successfully" };
+  } catch (error) {
+    return { status: false, message: "major not updated" };
+  }
+};

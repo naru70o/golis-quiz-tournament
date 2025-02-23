@@ -1,4 +1,7 @@
-import React from 'react'
+"use client";
+import Deletemajor from "@/ui/deletemajor";
+import UpdateMajor from "@/ui/updateMajor";
+import { EllipsisVertical } from "lucide-react";
 
 type Majors = {
   _id: string;
@@ -12,11 +15,22 @@ export default function MajorList({ majors }: { majors: Majors[] }) {
         {majors.map((major) => {
           return (
             <div
-              className="px-4 py-2 bg-gray-600 rounded-lg w-full cursor-pointer hover:bg-gray-700 transition-all duration-300 ease-in-out"
+              className="flex justify-between items-center px-4 py-2 bg-gray-600 rounded-lg w-full cursor-pointer hover:bg-gray-700 transition-all duration-300 ease-in-out"
               key={major._id}
             >
-              <div className="font-bold">{major.name}</div>
-              <div className="font-normal">34</div>
+              <div className="flex flex-col">
+                <div className="font-bold">{major.name}</div>
+                <div className="font-normal">34</div>
+              </div>
+              <details className="dropdown">
+                <summary className="btn m-1 px-2 border-none">
+                  <EllipsisVertical />
+                </summary>
+                <ul className="menu dropdown-content gap-1 inline-block z-[1] p-2 shadow bg-gray-500">
+                  <UpdateMajor major={major} />
+                  <Deletemajor majorId={major._id} />
+                </ul>
+              </details>
             </div>
           );
         })}

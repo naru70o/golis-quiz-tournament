@@ -3,13 +3,9 @@ import MajorList from "@/components/majorList";
 import Model from "@/components/Model";
 import connectiondb from "@/lib/db/connectiondb";
 import Major from "@/lib/schemas/model.major";
+import OpenModel from "@/ui/openModel";
 import { Types } from "mongoose";
 import { unstable_cache } from "next/cache";
-
-// type Majors = {
-//   _id: string;
-//   name: string;
-// };
 
 const majorsData = unstable_cache(
   async () => {
@@ -30,11 +26,13 @@ export default async function page() {
   const majors = await majorsData();
 
   console.log(majors);
+
+
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
       <Logo />
       <div className="self-end">
-        <Model />
+        <OpenModel />
       </div>
       <MajorList majors={majors} />
     </div>
