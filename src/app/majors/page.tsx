@@ -1,6 +1,7 @@
 import Logo from "@/components/Logo";
 import MajorList from "@/components/majorList";
-import Model from "@/components/Model";
+import MajorModel from "@/components/majorModel";
+import Model from "@/components/majorModel";
 import connectiondb from "@/lib/db/connectiondb";
 import Major from "@/lib/schemas/model.major";
 import OpenModel from "@/ui/openModel";
@@ -27,12 +28,15 @@ export default async function page() {
 
   console.log(majors);
 
-
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
       <Logo />
       <div className="self-end">
-        <OpenModel />
+        <OpenModel
+          modelid={"major_form_modal"}
+          modelName={"New Major"}
+          dialog={<MajorModel />}
+        />
       </div>
       <MajorList majors={majors} />
     </div>

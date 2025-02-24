@@ -2,13 +2,13 @@
 import { newMajor } from '@/app/actions/action';
 import React, { useRef, useTransition } from 'react'
 
-export default function Model() {
+export default function MajorModel() {
     const [pending,startTransition]=useTransition();
     const dialogRef = useRef<HTMLDialogElement>(null); 
 
   return (
     <>
-      <dialog id="my_modal_3" className="modal" ref={dialogRef}>
+      <dialog id="major_form_modal" className="modal" ref={dialogRef}>
         <div className="modal-box">
           <form
             action={async (formData: FormData) => {
@@ -27,7 +27,7 @@ export default function Model() {
               ✕
             </button>
             <div className="font-medium mt-4">
-              here is your inputs to add new major
+              Here is your input to add a new major
             </div>
             <div className="flex flex-col gap-2 w-full mt-6">
               <input

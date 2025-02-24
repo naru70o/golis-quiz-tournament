@@ -8,7 +8,6 @@ export default function Form() {
   }
   }>
     <input name="majorName" type="text" placeholder="major name" />
-
   </form>
   )
 }
