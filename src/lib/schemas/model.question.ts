@@ -52,9 +52,8 @@ const QuestionSchema: Schema<IQuestion> = new Schema({
 });
 
 // Create the Mongoose model with TypeScript
-const Question: Model<IQuestion> = mongoose.model<IQuestion>(
-  "Question",
-  QuestionSchema
-);
+const Question: Model<IQuestion> =
+  mongoose.models.Question ||
+  mongoose.model<IQuestion>("Question", QuestionSchema);
 
 export default Question;
