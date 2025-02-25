@@ -1,7 +1,6 @@
 import Logo from "@/components/Logo";
 import MajorList from "@/components/majorList";
 import MajorModel from "@/components/majorModel";
-import Model from "@/components/majorModel";
 import connectiondb from "@/lib/db/connectiondb";
 import Major from "@/lib/schemas/model.major";
 import OpenModel from "@/ui/openModel";

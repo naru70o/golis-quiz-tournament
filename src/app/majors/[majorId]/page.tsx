@@ -13,6 +13,7 @@ type Major = {
   name: string;
 };
 
+
 export default async function page({
   params,
 }: {
@@ -27,10 +28,19 @@ export default async function page({
   const [{ name, _id }] = major || [{} as Major];
 
   // fetching Questions for this major
-  const questions = await Question.find({ majorId: _id }).lean();
-  console.log(questions);
-
-  console.log(major);
+  const questions = (await Question.find({ majorId: _id }).lean()).map((question) => ({
+    _id: (question._id as mongoose.Types.ObjectId).toString(),
+    question: question.question,
+    majorId: (question.majorId as mongoose.Types.ObjectId).toString(),
+    options: question.options.map((option) => ({
+      text: option.text,
+    })),
+    correctOptionIndex: question.correctOptionIndex,
+    totalPoints: question.totalPoints,
+    createdAt: question.createdAt,
+  }));
+  
+  console.log(questions)
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
       <Logo />
@@ -48,9 +58,11 @@ export default async function page({
         {questions.length === 0 ? (
           <div>No Questions Found</div>
         ) : (
-          <QuestionsList />
+          <QuestionsList questions={questions}/>
         )}
       </div>
     </div>
   );
 }
+
+// 
