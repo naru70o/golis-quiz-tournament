@@ -113,3 +113,13 @@ export const newQuestion = async (
     return { success: false, message: error.message };
   }
 };
+
+export const deleteQuestion = async (questionId: string) => {
+  try {
+    await Question.findByIdAndDelete(questionId);
+    return { success: true, message: "Question deleted successfully" };
+  } catch (error) {
+    console.error("Error deleting question:", error);
+    return { success: false, message: error.message };
+  }
+};
