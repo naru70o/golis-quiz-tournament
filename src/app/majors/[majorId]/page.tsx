@@ -58,7 +58,7 @@ export default async function page({
         {questions.length === 0 ? (
           <div>No Questions Found</div>
         ) : (
-          <QuestionsList questions={questions}/>
+          <QuestionsList question={questions} />
         )}
       </div>
     </div>
