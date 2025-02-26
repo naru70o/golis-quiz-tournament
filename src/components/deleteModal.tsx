@@ -1,6 +1,8 @@
 "use client"
 
 import { deleteQuestion } from "@/app/actions/action";
+import { use, useTransition } from "react";
+import toast from "react-hot-toast";
 
 export default function DeleteModal({
   message,
@@ -9,6 +11,7 @@ export default function DeleteModal({
   message: string;
   id: string;
 }) {
+  const [pending, startTransition] = useTransition();
   console.log(id);
   return (
     <div>
@@ -29,7 +32,17 @@ export default function DeleteModal({
               <button className="btn btn-success">Close</button>
               <button
                 className="btn btn-warning"
-                onClick={() => deleteQuestion(id)}
+                onClick={() =>
+                  startTransition(async () => {
+                    const { success, message } = await deleteQuestion(id);
+                    if (success) {
+                      toast.success(message);
+                    } else {
+                      toast.error(message);
+                    }
+                  })
+                }
+                disabled={pending}
               >
                 Delete
               </button>

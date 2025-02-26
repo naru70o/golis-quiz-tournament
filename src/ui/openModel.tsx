@@ -16,7 +16,7 @@ export default function OpenModel({
   }
   return (
     <div>
-      <button className="btn btn-primary" onClick={() => showModal()}>
+      <button className="btn btn-primary " onClick={() => showModal()}>
         {modelName}
       </button>
       {dialog}

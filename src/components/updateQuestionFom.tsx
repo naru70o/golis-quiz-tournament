@@ -1,7 +1,8 @@
 "use client";
 
 import { updateQuestion} from "@/app/actions/action";
-import React, { useActionState, useRef, useState } from "react";
+import React, { useActionState, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 type Option = {
   text: string;
@@ -17,7 +18,11 @@ type Question = {
   createdAt: Date;
 };
 
-export default function UpdateQuestionForm({ question }: { question: Question }) {
+export default function UpdateQuestionForm({
+  question,
+}: {
+  question: Question;
+}) {
   const {
     _id,
     question: questionText,
@@ -42,6 +47,17 @@ export default function UpdateQuestionForm({ question }: { question: Question })
     totalPoints: totalPoints,
     createdAt: createdAt,
   });
+
+  useEffect(() => {
+    if (data) {
+      if (data?.success) {
+        toast.success(data.message);
+        dialogRef.current?.close();
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    }
+  }, [data]);
 
   return (
     <>

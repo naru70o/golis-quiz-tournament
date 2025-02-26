@@ -1,11 +1,23 @@
 "use client"
 import { newQuestion } from "@/app/actions/action";
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function QuestionForm({ majorId }: { majorId: string }) {
-  const [data, action,isPending] = useActionState(newQuestion,undefined);
+  const [data, action, isPending] = useActionState(newQuestion, undefined);
   const [majorIdinput, setMajorIdInput] = useState(majorId);
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (data) {
+      if (data.success) {
+        toast.success(data.message);
+        dialogRef.current?.close();
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    }
+  }, [data]);
 
   return (
     <>
@@ -33,18 +45,21 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
                   type="text"
                   placeholder="question"
                   className="input input-bordered w-full"
+                  required
                 />
                 <input
                   name="correctOptionIndex"
                   type="text"
                   placeholder="correct option"
                   className="input input-bordered w-full"
+                  required
                 />
                 <input
                   name="totalPoints"
                   type="text"
                   placeholder="Points"
                   className="input input-bordered w-full"
+                  required
                 />
                 <input
                   name="majorId"
@@ -85,15 +100,7 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
                   className="input input-bordered w-full"
                 />
               </div>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={isPending}
-                onClick={() => {
-                  if (!data?.success) return;
-                  dialogRef.current?.close();
-                }}
-              >
+              <button className="btn btn-primary" disabled={isPending}>
                 add
               </button>
             </div>
@@ -103,13 +110,3 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
     </>
   );
 }
-
-
-/*
-async (formData: FormData) => {
-              startTransition(async () => {
-                await newQuestion(formData);
-                dialogRef.current?.close();
-              });
-            }
-*/

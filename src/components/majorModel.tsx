@@ -1,10 +1,11 @@
 "use client"
 import { newMajor } from '@/app/actions/action';
 import React, { useRef, useTransition } from 'react'
+import toast from "react-hot-toast";
 
 export default function MajorModel() {
-    const [pending,startTransition]=useTransition();
-    const dialogRef = useRef<HTMLDialogElement>(null); 
+  const [pending, startTransition] = useTransition();
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
@@ -13,8 +14,13 @@ export default function MajorModel() {
           <form
             action={async (formData: FormData) => {
               startTransition(async () => {
-                await newMajor(formData);
+                const { success, message } = await newMajor(formData);
                 dialogRef.current?.close();
+                if (success) {
+                  toast.success(message);
+                } else {
+                  toast.error(message);
+                }
               });
             }}
             className="flex flex-col justify-center items-center"
@@ -35,6 +41,7 @@ export default function MajorModel() {
                 type="text"
                 placeholder="major name"
                 className="input input-bordered w-full"
+                required
               />
               <button className="btn btn-primary" disabled={pending}>
                 add

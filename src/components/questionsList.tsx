@@ -78,10 +78,10 @@ export default function QuestionsList({question}: {question: Question[]}) {
             <div className="grid lg:grid-cols-2 gap-y-3 gap-x-3 grid-cols-1">
               {question.options.map((option: Option, index: number) => (
                 <div
-                  className="px-4 py-2 bg-red-400 rounded-xl relative overflow-clip w-full"
+                  className="px-4 py-2 bg-accent text-accent-content rounded-xl relative overflow-clip w-full"
                   key={option.text}
                 >
-                  <div className="absolute rounded-xl bg-red-600 px-4 py-2 left-0 top-0 h-full text-3xl font-bold">
+                  <div className="absolute rounded-xl bg-success text-success-content px-4 py-2 left-0 top-0 h-full text-3xl font-bold">
                     {optionIdentifier(index)}
                   </div>
                   <div className="ml-12 text-3xl font-bold">{option.text}</div>

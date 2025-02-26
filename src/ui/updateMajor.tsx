@@ -1,21 +1,24 @@
 import { updateMajor } from '@/app/actions/action';
 import { Pencil } from 'lucide-react';
 import { useRef, useState, useTransition } from 'react';
+import toast from "react-hot-toast";
 
-type Major={
-    _id:string;
-    name:string;
-}
+type Major = {
+  _id: string;
+  name: string;
+};
 
-export default function UpdateMajor({major}:{major:Major}) {
-    const [pending,startTransition]=useTransition()
-    const dialogRef=useRef<HTMLDialogElement>(null);
-    const [name,setName]=useState<string>(major.name)
+export default function UpdateMajor({ major }: { major: Major }) {
+  const [pending, startTransition] = useTransition();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [name, setName] = useState<string>(major.name);
 
-    function showModal() {
-        const dialog = document.getElementById("my_modal_update_major") as HTMLDialogElement;
-        dialog.showModal();
-      }
+  function showModal() {
+    const dialog = document.getElementById(
+      "my_modal_update_major"
+    ) as HTMLDialogElement;
+    dialog.showModal();
+  }
 
   return (
     <>
@@ -32,8 +35,16 @@ export default function UpdateMajor({major}:{major:Major}) {
           <form
             action={async (formData: FormData) => {
               startTransition(async () => {
-                await updateMajor(major._id, formData);
+                const { success, message } = await updateMajor(
+                  major._id,
+                  formData
+                );
                 dialogRef.current?.close();
+                if (success) {
+                  toast.success(message);
+                } else {
+                  toast.error(message);
+                }
               });
             }}
             className="flex flex-col justify-center items-center"

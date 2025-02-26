@@ -5,6 +5,7 @@ import connectiondb from "@/lib/db/connectiondb";
 import Major from "@/lib/schemas/model.major";
 import Question from "@/lib/schemas/model.question";
 import OpenModel from "@/ui/openModel";
+import { ArrowRight, Pencil } from "lucide-react";
 import mongoose from "mongoose";
 import { unstable_cache } from "next/cache";
 import React from "react";
@@ -59,9 +60,24 @@ export default async function page({
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
       <Logo />
-      <h1 className="text-2xl font-bold mt-4">
-        Major {name.charAt(0).toUpperCase() + name.slice(1)}
-      </h1>
+      <div className="flex flex-col items-center justify-center w-full my-4">
+        <h1 className="text-3xl font-bold mb-2">
+          Major {name.charAt(0).toUpperCase() + name.slice(1)}{" "}
+          <Pencil className="inline-block h-5 w-5 hover:opacity-40 transition-all duration-150 ease-in-out cursor-pointer" />
+        </h1>
+        <div className="flex items-center gap-2">
+          <div className="text-[10px] tracking-widest py-1 px-2 bg-primary text-primary-content rounded-full">
+            Ended
+          </div>
+          <div className="text-[10px] tracking-widest py-1 px-2 bg-accent text-accent-content rounded-full">
+            60 points
+          </div>
+          <div className="text-[10px] tracking-widest py-1 px-2 bg-secondary text-secondary-content rounded-full cursor-pointer hover:underline-offset-1">
+            Start{" "}
+            <ArrowRight className="inline-block h-2 w-2 hover:opacity-40 transition-all duration-150 ease-in-out cursor-pointer" />
+          </div>
+        </div>
+      </div>
       <div className="self-end">
         <OpenModel
           modelid={"question_form_model"}

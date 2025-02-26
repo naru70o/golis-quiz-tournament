@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+    font-family: "Nunito", sans-serif;
+}
+
 .Lucide-icon {
     @apply cursor-pointer bg-gray-500 hover:bg-gray-700 shadow-md rounded-md p-2 transition-all duration-150 ease-in-out;
 }

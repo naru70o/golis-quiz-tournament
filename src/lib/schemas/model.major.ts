@@ -6,8 +6,10 @@ const majorSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  description: {
+  status: {
     type: String,
+    enum: ["soon", "active", "finished"],
+    default: "soon",
   },
   result: {
     type: Number,
