@@ -17,22 +17,19 @@ type Question = {
   createdAt: Date;
 };
 
-export default function UpdateQuestionForm({
-  question,
-}: {
-  question: Question[];
-}) {
-  const [
-    {
-      _id,
-      question: questionText,
-      majorId,
-      options,
-      correctOptionIndex,
-      totalPoints,
-      createdAt,
-    },
-  ] = question;
+export default function UpdateQuestionForm({ question }: { question: Question }) {
+  const {
+    _id,
+    question: questionText,
+    majorId,
+    options,
+    correctOptionIndex,
+    totalPoints,
+    createdAt,
+  } = question;
+
+  console.log("here is the question so take a look at it", question);
+
   const [data, action, isPending] = useActionState(updateQuestion, undefined);
   const [majorIdInput, setMajorIdInput] = useState(majorId);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -48,10 +45,7 @@ export default function UpdateQuestionForm({
 
   return (
     <>
-      <dialog
-        id="question_updateForm_model"
-        className="modal modal-bottom sm:modal-middle"
-      >
+      <dialog id={_id} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <form method="dialog" className="flex gap-2 justify-end">
             {/* if there is a button in form, it will close the modal */}

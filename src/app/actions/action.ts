@@ -107,6 +107,7 @@ export const newQuestion = async (
     console.log(newQuestion);
 
     await newQuestion.save();
+    revalidateTag("questions");
     return { success: true, message: "Question added successfully" };
   } catch (error) {
     console.error("Error adding question:", error);
@@ -117,13 +118,13 @@ export const newQuestion = async (
 export const deleteQuestion = async (questionId: string) => {
   try {
     await Question.findByIdAndDelete(questionId);
+    revalidateTag("questions");
     return { success: true, message: "Question deleted successfully" };
   } catch (error) {
     console.error("Error deleting question:", error);
     return { success: false, message: error.message };
   }
 };
-
 
 export const updateQuestion = async (
   currentState: unknown,
@@ -185,6 +186,7 @@ export const updateQuestion = async (
     };
 
     await Question.findByIdAndUpdate(questionId, rowData, { new: true });
+    revalidateTag("questions");
 
     return { success: true, message: "Question updated successfully" };
   } catch (error) {

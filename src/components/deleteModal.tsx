@@ -1,10 +1,21 @@
 "use client"
 
-export default function DeleteModal({message,deleteHandler}:{message:string,deleteHandler:()=>Promise<{ success: boolean; message: string; }>}) {
- 
+import { deleteQuestion } from "@/app/actions/action";
+
+export default function DeleteModal({
+  message,
+  id,
+}: {
+  message: string;
+  id: string;
+}) {
+  console.log(id);
   return (
     <div>
-      <dialog id="delete_model" className="modal modal-bottom sm:modal-middle">
+      <dialog
+        id={id + "_delete"}
+        className="modal modal-bottom sm:modal-middle"
+      >
         <div className="modal-box">
           <h3 className="font-bold text-lg"> Confirm Deletion</h3>
           <p className="py-4">
@@ -18,7 +29,7 @@ export default function DeleteModal({message,deleteHandler}:{message:string,dele
               <button className="btn btn-success">Close</button>
               <button
                 className="btn btn-warning"
-                onClick={() => deleteHandler()}
+                onClick={() => deleteQuestion(id)}
               >
                 Delete
               </button>
