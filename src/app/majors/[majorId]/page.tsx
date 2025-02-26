@@ -1,4 +1,5 @@
 import Logo from "@/components/Logo";
+import Navigation from "@/components/navigation";
 import QuestionForm from "@/components/questionForm";
 import QuestionsList from "@/components/questionsList";
 import connectiondb from "@/lib/db/connectiondb";
@@ -59,15 +60,15 @@ export default async function page({
   console.log(questions);
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
-      <Logo />
+      <Navigation />
       <div className="flex flex-col items-center justify-center w-full my-4">
         <h1 className="text-3xl font-bold mb-2">
           Major {name.charAt(0).toUpperCase() + name.slice(1)}{" "}
           <Pencil className="inline-block h-5 w-5 hover:opacity-40 transition-all duration-150 ease-in-out cursor-pointer" />
         </h1>
         <div className="flex items-center gap-2">
-          <div className="text-[10px] tracking-widest py-1 px-2 bg-primary text-primary-content rounded-full">
-            Ended
+          <div className="text-[10px] min-w-9 tracking-widest py-1 px-2 bg-primary text-primary-content rounded-full">
+            soon
           </div>
           <div className="text-[10px] tracking-widest py-1 px-2 bg-accent text-accent-content rounded-full">
             60 points

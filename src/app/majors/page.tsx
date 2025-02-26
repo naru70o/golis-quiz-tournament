@@ -1,6 +1,7 @@
 import Logo from "@/components/Logo";
 import MajorList from "@/components/majorList";
 import MajorModel from "@/components/majorModel";
+import Navigation from "@/components/navigation";
 import connectiondb from "@/lib/db/connectiondb";
 import Major from "@/lib/schemas/model.major";
 import OpenModel from "@/ui/openModel";
@@ -29,7 +30,7 @@ export default async function page() {
 
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
-      <Logo />
+      <Navigation />
       <div className="self-end">
         <OpenModel
           modelid={"major_form_modal"}
