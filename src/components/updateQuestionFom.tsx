@@ -1,7 +1,7 @@
 "use client";
 
 import { updateQuestion} from "@/app/actions/action";
-import { useActionState, useRef, useState } from "react";
+import React, { useActionState, useRef, useState } from "react";
 
 type Option = {
   text: string;
@@ -17,8 +17,25 @@ type Question = {
   createdAt: Date;
 };
 
-export default function UpdateQuestionForm({ question }: { question: Question[] }) {
-  const [{ _id, question: questionText, majorId, options, correctOptionIndex, totalPoints, createdAt }] = question;
+export default function UpdateQuestionForm({
+  question,
+}: {
+  question: Question[];
+}) {
+  const [
+    {
+      _id,
+      question: questionText,
+      majorId,
+      options,
+      correctOptionIndex,
+      totalPoints,
+      createdAt,
+    },
+  ] = question;
+  const [data, action, isPending] = useActionState(updateQuestion, undefined);
+  const [majorIdInput, setMajorIdInput] = useState(majorId);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [formData, setFormData] = useState({
     question: questionText,
@@ -29,24 +46,30 @@ export default function UpdateQuestionForm({ question }: { question: Question[] 
     createdAt: createdAt,
   });
 
-  console.log(formData.options[0]);
-
-  const [data, action, isPending] = useActionState(updateQuestion, undefined);
-  const [majorIdInput, setMajorIdInput] = useState(majorId);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
   return (
     <>
-      <dialog id="question_updateForm_model" className="modal" ref={dialogRef}>
+      <dialog
+        id="question_updateForm_model"
+        className="modal modal-bottom sm:modal-middle"
+      >
         <div className="modal-box">
-          <form action={action} className="flex flex-col justify-center items-center">
-            {/* Close button */}
-            <button type="button" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => dialogRef.current?.close()}>
-              ✕
+          <form method="dialog" className="flex gap-2 justify-end">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              x
             </button>
-            
-            <div className="font-medium mt-4">Here is your input to add a new question</div>
-            
+          </form>
+
+          <form
+            action={action}
+            className="flex flex-col justify-center items-center"
+          >
+            {/* Close button */}
+
+            <div className="font-medium mt-4">
+              Here is your input to update the question
+            </div>
+
             <div className="flex flex-col gap-2 w-full mt-6">
               {/* Question Input Fields */}
               <div className="flex flex-col gap-2">
@@ -54,7 +77,9 @@ export default function UpdateQuestionForm({ question }: { question: Question[] 
                   name="question"
                   type="text"
                   value={formData.question}
-                  onChange={(e) => setFormData({ ...formData, question: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, question: e.target.value })
+                  }
                   placeholder="Question"
                   className="input input-bordered w-full"
                 />
@@ -66,7 +91,12 @@ export default function UpdateQuestionForm({ question }: { question: Question[] 
                   name="correctOptionIndex"
                   type="text"
                   value={formData.correctOptionIndex}
-                  onChange={(e) => setFormData({ ...formData, correctOptionIndex: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      correctOptionIndex: Number(e.target.value),
+                    })
+                  }
                   placeholder="Correct Option Index"
                   className="input input-bordered w-full"
                 />
@@ -74,7 +104,12 @@ export default function UpdateQuestionForm({ question }: { question: Question[] 
                   name="totalPoints"
                   type="text"
                   value={formData.totalPoints}
-                  onChange={(e) => setFormData({ ...formData, totalPoints: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      totalPoints: Number(e.target.value),
+                    })
+                  }
                   placeholder="Total Points"
                   className="input input-bordered w-full"
                 />
@@ -98,7 +133,9 @@ export default function UpdateQuestionForm({ question }: { question: Question[] 
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        options: formData.options.map((option, i) => (i === index ? e.target.value : option)),
+                        options: formData.options.map((option, i) =>
+                          i === index ? e.target.value : option
+                        ),
                       })
                     }
                     placeholder={`Option ${index + 1}`}
@@ -106,7 +143,7 @@ export default function UpdateQuestionForm({ question }: { question: Question[] 
                   />
                 ))}
               </div>
-              
+
               {/* Submit Button */}
               <button
                 type="submit"
@@ -117,7 +154,7 @@ export default function UpdateQuestionForm({ question }: { question: Question[] 
                   dialogRef.current?.close();
                 }}
               >
-                Add
+                {isPending ? "Updating..." : "Update Question"}
               </button>
             </div>
           </form>

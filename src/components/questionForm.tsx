@@ -11,17 +11,17 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
     <>
       <dialog id="question_form_model" className="modal" ref={dialogRef}>
         <div className="modal-box">
+          <form method="dialog" className="flex gap-2 justify-end">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              x
+            </button>
+          </form>
+
           <form
             action={action}
             className="flex flex-col justify-center items-center"
           >
-            {/* if there is a button in form, it will close the modal */}
-            <button
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => dialogRef.current?.close()}
-            >
-              ✕
-            </button>
             <div className="font-medium mt-4">
               Here is your input to add a new question
             </div>
@@ -89,11 +89,10 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
                 type="submit"
                 className="btn btn-primary"
                 disabled={isPending}
-                onClick={() =>{
-                    if(!data?.success) return;
-                    dialogRef.current?.close()
-                }
-            }
+                onClick={() => {
+                  if (!data?.success) return;
+                  dialogRef.current?.close();
+                }}
               >
                 add
               </button>
