@@ -23,6 +23,9 @@ export const newMajor = async (formData: FormData) => {
 export const deleteMajor = async (id: string) => {
   try {
     await connectiondb();
+    if (!id) {
+      return { success: false, message: "id not found" };
+    }
     await Major.findByIdAndDelete(id);
     revalidateTag("majors");
     return { success: true, message: "major deleted successfully" };

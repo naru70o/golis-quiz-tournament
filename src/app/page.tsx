@@ -1,7 +1,11 @@
-import React from 'react'
+import Navigation from "@/components/navigation";
+import React from "react";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <>
+      <Navigation />
+      <div>page</div>
+    </>
+  );
 }
