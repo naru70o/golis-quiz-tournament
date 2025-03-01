@@ -4,6 +4,7 @@ import MajorModel from "@/components/majorModel";
 import Navigation from "@/components/navigation";
 import connectiondb from "@/lib/db/connectiondb";
 import Major from "@/lib/schemas/model.major";
+import NotFound from "@/ui/noFound";
 import OpenModel from "@/ui/openModel";
 import { Types } from "mongoose";
 import { unstable_cache } from "next/cache";
@@ -38,7 +39,11 @@ export default async function page() {
           dialog={<MajorModel />}
         />
       </div>
-      <MajorList majors={majors} />
+      {majors && majors.length === 0 ? (
+        <NotFound message="majors didn't found create one" />
+      ) : (
+        <MajorList majors={majors} />
+      )}
     </div>
   );
 }

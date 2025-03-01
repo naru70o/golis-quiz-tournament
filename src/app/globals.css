@@ -2,10 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
+html {
     font-family: "Nunito", sans-serif;
 }
+
+:root {
+    --color-darkest: #343a40;
+    --color-dark: #495057;
+    --color-medium: #ced4da;
+    --color-light: #f1f3f5;
+  
+    --color-theme: #1098ad;
+    --color-accent: #ffa94d;
+  }
 
 .Lucide-icon {
     @apply cursor-pointer bg-gray-500 hover:bg-gray-700 shadow-md rounded-md p-2 transition-all duration-150 ease-in-out;
 }
+
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  progress {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 12px;
+    grid-column: 1 / -1;
+  }
+
+  ::-webkit-progress-bar {
+    background-color: var(--color-medium);
+    border-radius: 100px;
+  }
+  ::-webkit-progress-value {
+    background-color: var(--color-theme);
+    border-radius: 100px;
+  }
