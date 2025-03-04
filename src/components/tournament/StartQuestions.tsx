@@ -12,6 +12,7 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
+import Logo from "../Logo";
 
 type Option = {
   text: string;
@@ -83,13 +84,13 @@ function reducer(state, action) {
   }
 }
 
-export default function StartQuiz({data}:{data:Question[]}) {
+export default function StartQuiz({ data }: { data: Question[] }) {
   const [
     { questions, status, index, answer, points, highscore, secondsRemaining },
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  console.log(points)
+  console.log(points);
 
   const numQuestions = questions.length;
 
@@ -98,13 +99,19 @@ export default function StartQuiz({data}:{data:Question[]}) {
     0
   );
 
-  useEffect(function () {
-      dispatch({ type: "dataRecieved", payload: data })
-  }, [data]);
+  useEffect(
+    function () {
+      dispatch({ type: "dataRecieved", payload: data });
+    },
+    [data]
+  );
 
   return (
-    <div className="App">
-      <Header />
+    <div className="bg-[#33479D] h-screen">
+      <div className="flex justify-between items-center">
+        <div className="bg-[url('/ramadan-dec.png')] bg-cover bg-center h-60 w-[354px] -translate-x-12"></div>
+        <Logo />
+      </div>
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
@@ -114,14 +121,14 @@ export default function StartQuiz({data}:{data:Question[]}) {
         )}
         {status === "active" && (
           <>
-            <Progress
-            key={index}
+            {/* <Progress
+              key={index}
               index={index}
               numQuestions={numQuestions}
               points={points}
               maxPossiblePoints={maxPossiblePoints}
               answer={answer}
-            />
+            /> */}
             <Question
               questions={questions[index]}
               dispatch={dispatch}
@@ -129,6 +136,15 @@ export default function StartQuiz({data}:{data:Question[]}) {
             />
             <Footer>
               {/* <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} /> */}
+
+              <p>
+                Question <strong>{index + 1}</strong> / {numQuestions}
+              </p>
+
+              <p>
+                <strong>{points}</strong> / {maxPossiblePoints}
+              </p>
+
               <NextButton
                 index={index}
                 numQuestions={numQuestions}

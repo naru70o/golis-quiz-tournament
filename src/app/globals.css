@@ -74,3 +74,11 @@ html {
     background-color: var(--color-theme);
     border-radius: 100px;
   }
+
+  .my-background {
+    background-image: url('/golis-logo.png'); /* Local or external URL */
+    background-size: cover; /* Covers the entire element */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+  }
+  

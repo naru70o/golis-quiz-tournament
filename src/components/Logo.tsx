@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Logo() {
   return (
-    <div className="flex items-center justify-start w-full">
+    <div className="flex items-center justify-start">
       <Link href="/" className="relative w-24 h-24 block">
         <Image
           src="/golis-logo.png"

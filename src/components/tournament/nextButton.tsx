@@ -4,7 +4,7 @@ function NextButton({ dispatch, answer, index, numQuestions }) {
   if (index < numQuestions - 1)
     return (
       <button
-        className="btn btn-ui"
+        className="btn px-8"
         onClick={() => dispatch({ type: "nextQuestion" })}
       >
         Next
@@ -13,10 +13,7 @@ function NextButton({ dispatch, answer, index, numQuestions }) {
 
   if (index === numQuestions - 1)
     return (
-      <button
-        className="btn btn-ui"
-        onClick={() => dispatch({ type: "finish" })}
-      >
+      <button className="btn px-8" onClick={() => dispatch({ type: "finish" })}>
         finish
       </button>
     );

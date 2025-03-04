@@ -1,31 +1,49 @@
 // import { useQuiz } from "../contexts/QuizContext";
 
+const optionIdentifier = (index: number) => {
+  if (index === 0) {
+    return "A";
+  } else if (index === 1) {
+    return "B";
+  } else if (index === 2) {
+    return "C";
+  } else if (index === 3) {
+    return "D";
+  }
+};
+
 function Options({ questions, dispatch, answer }) {
   // const { dispatch, answer } = useQuiz();
   const hasAnswered = answer !== null;
-  console.log("answer ...", questions.options)
+  console.log("answer ...", questions.options);
   return (
-    <div className="flex flex-col gap-[1.2rem] mb-[3.2rem]">
+    <div className="grid grid-cols-2 gap-y-9 gap-x-32 mb-[3.2rem] container max-w-7xl mx-auto">
       {questions.options &&
         questions.options.map((option, index) => {
-          console.log("option ...", index)
-        return  (
-        <button
-            className={`text-white btn w-full text-left ${index === answer ? "transform translate-x-[2rem]" : ""}  ${
-              hasAnswered
-                ? index === questions.correctOptionIndex
-                  ? "bg-[var(--color-theme)] border-2 border-[var(--color-theme)] text-[var(--color-light)]"
-                  : "bg-[var(--color-accent)] border-2 border-[var(--color-accent)] text-[var(--color-darkest)]"
-                : ""
-            }
+          console.log("option ...", index);
+          return (
+            <button
+              className={`bg-[#FBE726] text-black min-w-[300px] min-h-[108px] rounded-3xl relative ${
+                hasAnswered
+                  ? index === questions.correctOptionIndex
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                  : ""
+              }
             `}
-            key={option._id}
-            disabled={hasAnswered}
-            onClick={() => dispatch({ type: "newAnswer", payload: index })}
-          >
-            {option.text}
-          </button>)}
-        )}
+              key={option._id}
+              disabled={hasAnswered}
+              onClick={() => dispatch({ type: "newAnswer", payload: index })}
+            >
+              <div className="absolute flex items-center justify-center top-0 lef-0 text-white text-center text-5xl font-bold bg-[#33479D] h-full w-[20%] rounded-3xl border-4 border-[#FBE726]">
+                <div className="">{optionIdentifier(index)}</div>
+              </div>
+              <div className="text-3xl text-center font-bold ml-[25%]">
+                {option.text}
+              </div>
+            </button>
+          );
+        })}
     </div>
   );
 }
