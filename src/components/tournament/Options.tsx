@@ -17,7 +17,7 @@ function Options({ questions, dispatch, answer }) {
   const hasAnswered = answer !== null;
   console.log("answer ...", questions.options);
   return (
-    <div className="grid grid-cols-2 gap-y-9 gap-x-32 mb-[3.2rem] container max-w-7xl mx-auto">
+    <div className="grid grid-cols-2 gap-y-9 gap-x-32 mb-[3.2rem] container max-w-7xl mx-auto -translate-y-[20%]">
       {questions.options &&
         questions.options.map((option, index) => {
           console.log("option ...", index);

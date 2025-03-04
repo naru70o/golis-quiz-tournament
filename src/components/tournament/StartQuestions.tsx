@@ -121,14 +121,6 @@ export default function StartQuiz({ data }: { data: Question[] }) {
         )}
         {status === "active" && (
           <>
-            {/* <Progress
-              key={index}
-              index={index}
-              numQuestions={numQuestions}
-              points={points}
-              maxPossiblePoints={maxPossiblePoints}
-              answer={answer}
-            /> */}
             <Question
               questions={questions[index]}
               dispatch={dispatch}

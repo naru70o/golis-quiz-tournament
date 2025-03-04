@@ -14,7 +14,7 @@ function Question({ questions, dispatch, answer }) {
         <div className="absolute top-0 lef-0 bg-[#33479D] h-full w-[20%] rounded-3xl border-4 border-[#FBE726]">
           <Image src="/yellow-question-mark.png" alt="question-mark" fill />
         </div>
-        <div className="text-3xl font-bold text-black text-center ml-[25%]">
+        <div className="text-3xl self-center w-full font-bold text-black text-center ml-[25%]">
           {questions.question} ?
         </div>
       </div>
