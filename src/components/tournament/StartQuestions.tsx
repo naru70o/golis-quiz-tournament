@@ -1,18 +1,15 @@
 "use client"
 
 import { useEffect, useReducer } from "react";
-import Header from "./Header";
-import Main from "./Main";
-import Loader from "./Loader";
+import Logo from "../Logo";
 import Error from "./Error";
-import StartScreen from "./StartScreen";
-import Question from "./Question";
-import NextButton from "./nextButton";
-import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
-import Timer from "./Timer";
-import Logo from "../Logo";
+import Loader from "./Loader";
+import Main from "./Main";
+import NextButton from "./nextButton";
+import Question from "./Question";
+import StartScreen from "./StartScreen";
 
 type Option = {
   text: string;
@@ -28,9 +25,39 @@ type Question = {
   createdAt: Date;
 };
 
-// import { type } from "@testing-library/user-event/dist/type";
+// Typing
+type InitialStateType = {
+  questions: Question[];
+  status: string;
+  index: number;
+  answer: number | null;
+  points: number;
+  highscore: number;
+  secondsRemaining: number | null;
+};
 
-const initialState = {
+enum ActionKind {
+  dataRecieved = "dataRecieved",
+  dataFailed = "dataFailed",
+  start = "start",
+  newAnswer = "newAnswer",
+  nextQuestion = "nextQuestion",
+  finish = "finish",
+  restart = "restart",
+  tick = "tick",
+}
+
+export type ActionType =
+  | { type: ActionKind.dataRecieved; payload: Question[] }
+  | { type: ActionKind.dataFailed }
+  | { type: ActionKind.start }
+  | { type: ActionKind.newAnswer; payload: number | null }
+  | { type: ActionKind.nextQuestion }
+  | { type: ActionKind.finish }
+  | { type: ActionKind.restart }
+  | { type: ActionKind.tick };
+
+const initialState: InitialStateType = {
   questions: [],
   status: "loading",
   index: 0,
@@ -42,19 +69,28 @@ const initialState = {
 
 const SECS_PER_QUESTION = 30;
 
-function reducer(state, action) {
+function reducer(
+  state: InitialStateType,
+  action: ActionType
+): InitialStateType {
   switch (action.type) {
-    case "dataRecieved":
+    case ActionKind.dataRecieved:
       return { ...state, questions: action.payload, status: "ready" };
-    case "dataFailed":
+
+    case ActionKind.dataFailed:
       return { ...state, status: "error" };
-    case "start":
+
+    case ActionKind.start:
       return {
         ...state,
         status: "active",
+        secondsRemaining: SECS_PER_QUESTION,
       };
-    case "newAnswer":
-      const question = state.questions.at(state.index);
+
+    case ActionKind.newAnswer:
+      const question = state.questions[state.index];
+      if (!question) return state;
+
       return {
         ...state,
         answer: action.payload,
@@ -63,24 +99,35 @@ function reducer(state, action) {
             ? state.points + question.totalPoints
             : state.points,
       };
-    case "nextQuestion":
+
+    case ActionKind.nextQuestion:
       return { ...state, index: state.index + 1, answer: null };
-    case "finish":
-      return { ...state, status: "finished" };
-    case "restart":
+
+    case ActionKind.finish:
+      return {
+        ...state,
+        status: "finished",
+        highscore: Math.max(state.highscore, state.points),
+      };
+
+    case ActionKind.restart:
       return {
         ...initialState,
         questions: state.questions,
         status: "ready",
       };
-    case "tick":
+
+    case ActionKind.tick:
+      if (state.secondsRemaining === null || state.secondsRemaining <= 0) {
+        return { ...state, status: "finished", secondsRemaining: 0 };
+      }
       return {
         ...state,
         secondsRemaining: state.secondsRemaining - 1,
-        status: state.secondsRemaining === 0 ? "finished" : state.status,
       };
+
     default:
-      throw new Error("case unknown");
+      return state;
   }
 }
 
@@ -95,16 +142,13 @@ export default function StartQuiz({ data }: { data: Question[] }) {
   const numQuestions = questions.length;
 
   const maxPossiblePoints = questions.reduce(
-    (prev, cur) => prev + cur.totalPoints,
+    (prev: number, cur: Question) => prev + cur.totalPoints,
     0
   );
 
-  useEffect(
-    function () {
-      dispatch({ type: "dataRecieved", payload: data });
-    },
-    [data]
-  );
+  useEffect(() => {
+    dispatch({ type: ActionKind.dataRecieved, payload: data });
+  }, [data]);
 
   return (
     <div className="bg-[#33479D] h-screen">
