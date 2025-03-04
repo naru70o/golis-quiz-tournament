@@ -3,9 +3,6 @@ import Image from "next/image";
 import Options from "./Options";
 
 function Question({ questions, dispatch, answer }) {
-  //   const { questions, index } = useQuiz();
-  //   const question = questions.at(index);
-
   console.log(questions);
 
   return (
