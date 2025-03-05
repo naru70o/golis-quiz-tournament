@@ -33,12 +33,6 @@ majorSchema.pre("findOneAndDelete", async function (next) {
   }
 });
 
-majorSchema.pre("save", function (next) {
-  // Perform some action before saving the document
-  console.log("A user is about to be saved:", this);
-  next();
-});
-
  const Major = mongoose.models.Major || mongoose.model("Major", majorSchema);
 
  export default Major;
