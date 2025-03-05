@@ -47,6 +47,17 @@ export const updateMajor = async (id: string, formData: FormData) => {
   }
 };
 
+
+// update State major
+export const updateStateMajor = async (currentState:unknown, formData: FormData) => {
+  // const 
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
 // Question
 
 export const newQuestion = async (
@@ -197,3 +208,5 @@ export const updateQuestion = async (
     return { success: false, message: error.message };
   }
 };
+
+
