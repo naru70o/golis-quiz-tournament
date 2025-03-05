@@ -1,8 +1,17 @@
 // import { useQuiz } from "../contexts/QuizContext";
 import Image from "next/image";
 import Options from "./Options";
+import { ActionType, Question as QuestionType } from "./StartQuestions";
 
-function Question({ questions, dispatch, answer }) {
+function Question({
+  questions,
+  dispatch,
+  answer,
+}: {
+  questions: QuestionType;
+  dispatch: React.Dispatch<ActionType>;
+  answer: number | null;
+}) {
   console.log(questions);
 
   return (

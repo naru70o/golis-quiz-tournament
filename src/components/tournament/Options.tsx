@@ -1,4 +1,4 @@
-// import { useQuiz } from "../contexts/QuizContext";
+import { ActionKind, ActionType, Question } from "./StartQuestions";
 
 const optionIdentifier = (index: number) => {
   if (index === 0) {
@@ -12,7 +12,15 @@ const optionIdentifier = (index: number) => {
   }
 };
 
-function Options({ questions, dispatch, answer }) {
+function Options({
+  questions,
+  dispatch,
+  answer,
+}: {
+  questions: Question;
+  dispatch: React.Dispatch<ActionType>;
+  answer: number | null;
+}) {
   // const { dispatch, answer } = useQuiz();
   const hasAnswered = answer !== null;
   console.log("answer ...", questions.options);
@@ -33,7 +41,9 @@ function Options({ questions, dispatch, answer }) {
             `}
               key={option._id}
               disabled={hasAnswered}
-              onClick={() => dispatch({ type: "newAnswer", payload: index })}
+              onClick={() =>
+                dispatch({ type: ActionKind.newAnswer, payload: index })
+              }
             >
               <div className="absolute flex items-center justify-center top-0 lef-0 text-white text-center text-5xl font-bold bg-[#33479D] h-full w-[20%] rounded-3xl border-4 border-[#FBE726]">
                 <div className="">{optionIdentifier(index)}</div>

@@ -7,21 +7,39 @@ import { unstable_cache } from "next/cache";
 import React from "react";
 import StartQuiz from "@/components/tournament/StartQuestions"
 
+type Option = {
+  _id: unknown;
+  text: string;
+};
+
+type Question = {
+  _id: unknown;
+  question: string;
+  majorId: unknown;
+  options: Option[];
+  correctOptionIndex: number;
+  totalPoints: number;
+  createdAt: Date;
+};
+
 // Define the fetching function for the questions using unstable_cache
 const questionsMajor = unstable_cache(
   async (majorId: string) => {
     // Query questions with the matching majorId and convert Mongoose ObjectIDs to strings
-    const questions = (await Question.find({ majorId }).lean()).map((question) => ({
-      _id: (question._id as mongoose.Types.ObjectId).toString(),
-      question: question.question,
-      majorId: (question.majorId as mongoose.Types.ObjectId).toString(),
-      options: question.options.map((option: { text: string }) => ({
-        text: option.text,
-      })),
-      correctOptionIndex: question.correctOptionIndex,
-      totalPoints: question.totalPoints,
-      createdAt: question.createdAt,
-    }));
+    const questions = (await Question.find({ majorId }).lean<Question[]>()).map(
+      (question) => ({
+        _id: (question._id as mongoose.Types.ObjectId).toString(),
+        question: question.question,
+        majorId: (question.majorId as mongoose.Types.ObjectId).toString(),
+        options: question.options.map((option) => ({
+          text: option.text,
+          _id: (option._id as mongoose.Types.ObjectId).toString(),
+        })),
+        correctOptionIndex: question.correctOptionIndex,
+        totalPoints: question.totalPoints,
+        createdAt: question.createdAt,
+      })
+    );
 
     return questions;
   },

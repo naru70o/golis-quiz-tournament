@@ -12,10 +12,11 @@ import Question from "./Question";
 import StartScreen from "./StartScreen";
 
 type Option = {
+  _id: string;
   text: string;
 };
 
-type Question = {
+export type Question = {
   _id: string;
   question: string;
   majorId: string;
@@ -26,7 +27,7 @@ type Question = {
 };
 
 // Typing
-type InitialStateType = {
+export type InitialStateType = {
   questions: Question[];
   status: string;
   index: number;
@@ -36,7 +37,7 @@ type InitialStateType = {
   secondsRemaining: number | null;
 };
 
-enum ActionKind {
+export enum ActionKind {
   dataRecieved = "dataRecieved",
   dataFailed = "dataFailed",
   start = "start",
