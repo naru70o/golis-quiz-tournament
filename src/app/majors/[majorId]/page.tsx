@@ -1,4 +1,3 @@
-import Logo from "@/components/Logo";
 import Navigation from "@/components/navigation";
 import QuestionForm from "@/components/questionForm";
 import QuestionsList from "@/components/questionsList";
@@ -7,15 +6,17 @@ import Major from "@/lib/schemas/model.major";
 import Question from "@/lib/schemas/model.question";
 import NotFound from "@/ui/noFound";
 import OpenModel from "@/ui/openModel";
-import { ArrowRight, Pencil } from "lucide-react";
+import UpdatePencil from "@/ui/updatePencil";
+import { ArrowRight } from "lucide-react";
 import mongoose from "mongoose";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
-import React from "react";
 
 type Major = {
   _id: string;
   name: string;
+  result: number;
+  status: string;
 };
 
 const questionsMajor = unstable_cache(
@@ -53,13 +54,19 @@ export default async function page({
   const major = (await Major.find({ _id: majorId }).lean()).map((major) => ({
     _id: (major._id as mongoose.Types.ObjectId).toString(),
     name: major.name,
+    result: major.result,
+    status: major.status,
   }));
-  const [{ name, _id }] = major || [{} as Major];
+
+  const firstMajor =
+    major.length > 0
+      ? major[0]
+      : { _id: "", name: "", result: null, status: "soon" };
+  const { name, _id, result, status } = firstMajor;
 
   // fetching Questions for this major
   const questions = await questionsMajor(_id);
 
-  console.log(questions);
   return (
     <>
       <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
@@ -67,7 +74,7 @@ export default async function page({
         <div className="flex flex-col items-center justify-center w-full my-4">
           <h1 className="text-3xl font-bold mb-2">
             Major {name.charAt(0).toUpperCase() + name.slice(1)}{" "}
-            <Pencil className="inline-block h-5 w-5 hover:opacity-40 transition-all duration-150 ease-in-out cursor-pointer" />
+            <UpdatePencil _id={_id} result={result} status={status} />
           </h1>
           <div className="flex items-center gap-2">
             <div className="text-[10px] min-w-9 tracking-widest py-1 px-2 bg-primary text-primary-content rounded-full">
