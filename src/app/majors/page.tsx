@@ -1,4 +1,3 @@
-import Logo from "@/components/Logo";
 import MajorList from "@/components/majorList";
 import MajorModel from "@/components/majorModel";
 import Navigation from "@/components/navigation";

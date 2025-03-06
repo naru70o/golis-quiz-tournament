@@ -29,7 +29,7 @@ majorSchema.pre("findOneAndDelete", async function (next) {
     console.log("Deleted all questions with majorId: ", _id);
     next();
   } catch (err: unknown) {
-    next(err); // Forward the error to abort the operation
+    next(); 
   }
 });
 
