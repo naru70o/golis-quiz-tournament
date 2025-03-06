@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import { ActionKind, ActionType, Question } from "./StartQuestions";
 
 const optionIdentifier = (index: number) => {
@@ -21,7 +23,7 @@ function Options({
   dispatch: React.Dispatch<ActionType>;
   answer: number | null;
 }) {
-  // const { dispatch, answer } = useQuiz();
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const hasAnswered = answer !== null;
   console.log("answer ...", questions.options);
   return (
@@ -31,19 +33,22 @@ function Options({
           console.log("option ...", index);
           return (
             <button
-              className={`bg-[#FBE726] text-black min-w-[300px] min-h-[108px] rounded-3xl relative ${
+              className={`bg-[#FBE726] text-black min-w-[300px] min-h-[108px] rounded-3xl relative  ${
                 hasAnswered
                   ? index === questions.correctOptionIndex
-                    ? "bg-green-500"
-                    : "bg-red-500"
+                    ? "bg-green-500 "
+                    : selectedIndex === index
+                    ? "bg-red-500 animate-pulse"
+                    : ""
                   : ""
               }
             `}
               key={option._id}
               disabled={hasAnswered}
-              onClick={() =>
-                dispatch({ type: ActionKind.newAnswer, payload: index })
-              }
+              onClick={() => {
+                setSelectedIndex(index);
+                dispatch({ type: ActionKind.newAnswer, payload: index });
+              }}
             >
               <div className="absolute flex items-center justify-center top-0 lef-0 text-white text-center text-5xl font-bold bg-[#33479D] h-full w-[20%] rounded-3xl border-4 border-[#FBE726]">
                 <div className="">{optionIdentifier(index)}</div>

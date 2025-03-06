@@ -59,13 +59,11 @@ export default async function QuestionsPage({
   // Extract the majorId from the route parameters
   const { majorId } = await params;
 
-  // Ensure the database connection is established
+  // the database connection is established
   await connectiondb();
 
   // Fetch questions for the given major using our helper function
   const questions = await questionsMajor(majorId);
 
-  return (
-    <StartQuiz data={questions}/>
-  );
+  return <StartQuiz data={questions} />;
 }

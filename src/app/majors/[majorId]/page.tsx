@@ -6,8 +6,8 @@ import Major from "@/lib/schemas/model.major";
 import Question from "@/lib/schemas/model.question";
 import NotFound from "@/ui/noFound";
 import OpenModel from "@/ui/openModel";
+import SetStatusActive from "@/ui/setStatusActive";
 import UpdatePencil from "@/ui/updatePencil";
-import { ArrowRight } from "lucide-react";
 import mongoose from "mongoose";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
@@ -62,6 +62,7 @@ export default async function page({
     major.length > 0
       ? major[0]
       : { _id: "", name: "", result: null, status: "soon" };
+  console.log(firstMajor, "fuck");
   const { name, _id, result, status } = firstMajor;
 
   // fetching Questions for this major
@@ -80,14 +81,15 @@ export default async function page({
             <div className="text-[10px] min-w-9 tracking-widest py-1 px-2 bg-primary text-primary-content rounded-full">
               soon
             </div>
-            <div className="text-[10px] tracking-widest py-1 px-2 bg-accent text-accent-content rounded-full">
-              60 points
+            <div
+              className={`text-[10px] tracking-widest py-1 px-2 bg-accent text-accent-content rounded-full ${
+                status === "soon" ? "hidden" : ""
+              }`}
+            >
+              {result} points
             </div>
             <Link href={`/majors/${_id}/questions`}>
-              <div className="text-[10px] tracking-widest py-1 px-2 bg-secondary text-secondary-content rounded-full cursor-pointer hover:underline-offset-1">
-                Start{" "}
-                <ArrowRight className="inline-block h-2 w-2 hover:opacity-40 transition-all duration-150 ease-in-out cursor-pointer" />
-              </div>
+              <SetStatusActive _id={_id} />
             </Link>
           </div>
         </div>

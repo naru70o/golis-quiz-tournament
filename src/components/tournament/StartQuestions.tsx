@@ -194,6 +194,7 @@ export default function StartQuiz({ data }: { data: Question[] }) {
         {status === "finished" && (
           <FinishScreen
             points={points}
+            question={questions}
             maxPossiblePoints={maxPossiblePoints}
             dispatch={dispatch}
             highscore={highscore}
