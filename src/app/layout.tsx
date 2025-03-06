@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import { Suspense } from "react";
+import FullSpinner from "@/ui/fullSpinner";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -23,7 +25,9 @@ export default function RootLayout({
       <body
         className={`${nunito.variable} antialiased text-green-200 overflow-x-hidden`}
       >
-        <main>{children}</main>
+        <Suspense fallback={<FullSpinner />}>
+          <main>{children}</main>
+        </Suspense>
         <Toaster />
       </body>
     </html>
