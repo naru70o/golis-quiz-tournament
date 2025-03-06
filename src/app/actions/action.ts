@@ -163,7 +163,7 @@ export const newQuestion = async (
     return { success: true, message: "Question added successfully" };
   } catch (error) {
     console.error("Error adding question:", error);
-    return { success: false, message: error.message };
+    return { success: false, message: "failed adding new question" };
   }
 };
 
@@ -174,7 +174,7 @@ export const deleteQuestion = async (questionId: string) => {
     return { success: true, message: "Question deleted successfully" };
   } catch (error) {
     console.error("Error deleting question:", error);
-    return { success: false, message: error.message };
+    return { success: false, message: "failed deleting question" };
   }
 };
 
@@ -243,7 +243,7 @@ export const updateQuestion = async (
     return { success: true, message: "Question updated successfully" };
   } catch (error) {
     console.error("Error adding question:", error);
-    return { success: false, message: error.message };
+    return { success: false, message: "Failed to update question." };
   }
 };
 
