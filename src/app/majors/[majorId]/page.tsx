@@ -62,6 +62,7 @@ export default async function page({
     major.length > 0
       ? major[0]
       : { _id: "", name: "", result: null, status: "soon" };
+      console.log(firstMajor, "fuck");
   const { name, _id, result, status } = firstMajor;
 
   // fetching Questions for this major

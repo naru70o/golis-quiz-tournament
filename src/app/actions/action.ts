@@ -52,9 +52,18 @@ export const updateMajor = async (id: string, formData: FormData) => {
 export const updateStateMajor = async (currentState:unknown, formData: FormData) => {
   // const 
   try {
-    
+    const selectedState = formData.get("status");
+    const updatesResult= formData.get("result");
+    const id=formData.get("id");
+    await connectiondb();
+    await Major.findByIdAndUpdate(id, {
+      status: selectedState,
+      result: updatesResult,
+    },{new: true});
+    revalidateTag("majors");
+    return { success: true, message: "major updated successfully" };
   } catch (error) {
-    
+    return { success: false, message: "major not updated" };
   }
 }
 
