@@ -67,6 +67,35 @@ export const updateStateMajor = async (currentState:unknown, formData: FormData)
   }
 }
 
+export const majorSetStatusActive = async (id: string) => {
+  try {
+    await connectiondb();
+    await Major.findByIdAndUpdate(id, {
+      status: "active",
+    });
+    revalidateTag("majors");
+    console.log("major updated successfully");
+    return { success: true, message: "major updated successfully" };
+  } catch (error) {
+    return { success: false, message: "major not updated" };
+  }
+};
+
+export const majorSetStatusFinished = async (id: string, result: number) => {
+  try {
+    await connectiondb();
+    await Major.findByIdAndUpdate(id, {
+      status: "finished",
+      result: result,
+    });
+    revalidateTag("majors");
+    console.log("major updated successfully");
+    return { success: true, message: "major updated successfully" };
+  } catch (error) {
+    return { success: false, message: "major not updated" };
+  }
+};
+
 // Question
 
 export const newQuestion = async (
