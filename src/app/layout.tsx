@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { Suspense } from "react";
 import FullSpinner from "@/ui/fullSpinner";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -25,10 +26,12 @@ export default function RootLayout({
       <body
         className={`${nunito.variable} antialiased text-green-200 overflow-x-hidden`}
       >
-        <Suspense fallback={<FullSpinner />}>
-          <main>{children}</main>
-        </Suspense>
-        <Toaster />
+        <ClerkProvider>
+          <Suspense fallback={<FullSpinner />}>
+            <main>{children}</main>
+          </Suspense>
+          <Toaster />
+        </ClerkProvider>
       </body>
     </html>
   );
