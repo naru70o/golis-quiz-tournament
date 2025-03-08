@@ -9,6 +9,10 @@ export default function page() {
           see this page{" "}
           <Link href="/majors" className="text-red-300">
             Majors
+          </Link>{" "}
+          or{" "}
+          <Link href="/sign-in" className="text-red-300">
+            sign-in
           </Link>
         </div>
       </div>
