@@ -12,8 +12,6 @@ function Question({
   dispatch: React.Dispatch<ActionType>;
   answer: number | null;
 }) {
-  console.log(questions);
-
   return (
     <>
       <div className="flex items-center bg-[#FBE726] min-h-36 max-w-[634px] relative rounded-3xl overflow-clip mx-auto -translate-y-[100%] pr-3">

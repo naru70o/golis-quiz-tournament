@@ -22,7 +22,7 @@ type Question = {
   createdAt: Date;
 };
 
-// Define the fetching function for the questions using unstable_cache
+    // Define the fetching function for the questions using unstable_cache
 const questionsMajor = unstable_cache(
   async (majorId: string) => {
     // Query questions with the matching majorId and convert Mongoose ObjectIDs to strings

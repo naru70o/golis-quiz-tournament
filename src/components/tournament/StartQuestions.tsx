@@ -155,7 +155,7 @@ export default function StartQuiz({ data }: { data: Question[] }) {
     <div className="bg-[#33479D] h-screen ">
       <div className="flex justify-between items-center">
         <div className="bg-[url('/ramadan-dec.png')] bg-cover bg-center h-60 w-[354px] -translate-x-12"></div>
-        <div className="h-26 w-26 bg-[#FBE726] rounded-full">
+        <div className="h-26 w-26 bg-[#FBE726] rounded-full -translate-x-72 ">
           <Logo />
         </div>
       </div>

@@ -67,6 +67,7 @@ export default async function page({
 
   // fetching Questions for this major
   const questions = await questionsMajor(_id);
+  
 
   return (
     <>
@@ -88,9 +89,16 @@ export default async function page({
             >
               {result} points
             </div>
-            <Link href={`/majors/${_id}/questions`}>
-              <SetStatusActive _id={_id} />
-            </Link>
+
+            {questions.length === 0 ? (
+              <div className="text-[10px] tracking-widest py-1 px-2 bg-secondary text-secondary-content rounded-full cursor-pointer hover:underline-offset-1">
+                Add Questions first
+              </div>
+            ) : (
+              <Link href={`/majors/${_id}/questions`}>
+                <SetStatusActive _id={_id} />
+              </Link>
+            )}
           </div>
         </div>
         <div className="self-end">
