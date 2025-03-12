@@ -12,7 +12,7 @@ export default function Navigation() {
       <div className="flex-none">
         <ul className="menu menu-horizontal gap-4 items-center px-1">
           <li className="bg-base-200">
-            <Link href="/majors">Major</Link>
+            <Link href="/majors">Faculties</Link>
           </li>
           <UserButton />
         </ul>

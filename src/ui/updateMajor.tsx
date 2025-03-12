@@ -53,7 +53,7 @@ export default function UpdateMajor({ major }: { major: Major }) {
             className="flex flex-col justify-center items-center"
           >
             <div className="font-medium mt-4">
-              here is your inputs to Update the major
+              here is your input to Update the Faculty
             </div>
             <div className="flex flex-col gap-2 w-full mt-6">
               <input

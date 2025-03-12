@@ -6,7 +6,7 @@ import React from 'react'
 export default function SetStatusActive({_id}: { _id: string }) {
   return (
     <button
-      className="text-[10px] tracking-widest py-1 px-2 bg-secondary text-secondary-content rounded-full cursor-pointer hover:underline-offset-1"
+      className="text-[10px] tracking-widest py-1 px-2 primary-content rounded-full cursor-pointer hover:underline-offset-1"
       onClick={async () => majorSetStatusActive(_id)}
     >
       Start

@@ -68,15 +68,16 @@ export default async function page({
   // fetching Questions for this major
   const questions = await questionsMajor(_id);
   
-
   return (
     <>
       <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
         <Navigation />
         <div className="flex flex-col items-center justify-center w-full my-4">
           <h1 className="text-3xl font-bold mb-2">
-            Major {name.charAt(0).toUpperCase() + name.slice(1)}{" "}
-            <UpdatePencil _id={_id} result={result} status={status} />
+            {name.charAt(0).toUpperCase() + name.slice(1)}
+            <span className="ml-2">
+              <UpdatePencil _id={_id} result={result} status={status} />
+            </span>
           </h1>
           <div className="flex items-center gap-2">
             <div className="text-[10px] min-w-9 tracking-widest py-1 px-2 bg-primary text-primary-content rounded-full">

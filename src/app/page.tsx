@@ -8,7 +8,7 @@ export default function page() {
           this page is in a development mode so if you are authenticated you can
           see this page{" "}
           <Link href="/majors" className="text-red-300">
-            Majors
+            Fuculties
           </Link>{" "}
           or{" "}
           <Link href="/sign-in" className="text-red-300">
