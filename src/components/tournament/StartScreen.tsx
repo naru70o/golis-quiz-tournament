@@ -10,7 +10,7 @@ function StartScreen({
   return (
     <div className="flex flex-col items-center justify-center">
       <h2 className="text-3xl font-bold mb-2">
-        Welcome to The Golis Ramadan Quiz!
+        Welcome to The Gollis Ramadan Quiz!
       </h2>
       <h3 className="mb-4">{numQuestions} questions for this major</h3>
       <button
