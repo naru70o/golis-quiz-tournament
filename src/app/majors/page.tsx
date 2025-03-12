@@ -26,8 +26,6 @@ export default async function page() {
 
   const majors = await majorsData();
 
-  console.log(majors);
-
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
       <Navigation />

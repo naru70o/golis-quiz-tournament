@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <body
         className={`${nunito.variable} antialiased text-green-200 overflow-x-hidden`}
       >

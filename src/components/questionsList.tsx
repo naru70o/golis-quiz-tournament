@@ -1,7 +1,6 @@
 "use client"
 import { Pencil, Trash } from "lucide-react";
 import DeleteModal from "./deleteModal";
-import { deleteQuestion } from "@/app/actions/action";
 import UpdateQuestionForm from "./updateQuestionFom";
 
 type Option = {

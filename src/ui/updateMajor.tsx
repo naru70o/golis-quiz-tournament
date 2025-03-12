@@ -22,16 +22,19 @@ export default function UpdateMajor({ major }: { major: Major }) {
 
   return (
     <>
-      <div
-        className="border-b border-gray-400 flex items-center gap-2 pb-1"
-        onClick={() => showModal()}
+      <dialog
+        id={`my_modal_update_major${major._id}`}
+        className="modal"
+        ref={dialogRef}
       >
-        <Pencil size={16} strokeWidth={1} />
-        <div>Update</div>
-      </div>
-
-      <dialog id="my_modal_update_major" className="modal" ref={dialogRef}>
         <div className="modal-box">
+          {/* Close Button */}
+          <form method="dialog" className="flex gap-2 justify-end">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              x
+            </button>
+          </form>
+
           <form
             action={async (formData: FormData) => {
               startTransition(async () => {
@@ -49,13 +52,6 @@ export default function UpdateMajor({ major }: { major: Major }) {
             }}
             className="flex flex-col justify-center items-center"
           >
-            {/* if there is a button in form, it will close the modal */}
-            <button
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => dialogRef.current?.close()}
-            >
-              ✕
-            </button>
             <div className="font-medium mt-4">
               here is your inputs to Update the major
             </div>

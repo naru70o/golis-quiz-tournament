@@ -1,9 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@plugin "daisyui";
 
 html {
     font-family: "Nunito", sans-serif;
+}
+
+@plugin "daisyui" {
+  themes:  --dark;
 }
 
 :root {

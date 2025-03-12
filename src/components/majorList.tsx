@@ -1,7 +1,7 @@
 "use client";
 import Deletemajor from "@/ui/deletemajor";
 import UpdateMajor from "@/ui/updateMajor";
-import { EllipsisVertical } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
 import Link from "next/link";
 
 type Majors = {
@@ -10,6 +10,20 @@ type Majors = {
 };
 
 export default function MajorList({ majors }: { majors: Majors[] }) {
+  function showModal(id: string) {
+    const dialog = document.getElementById(
+      `my_modal_update_major${id}`
+    ) as HTMLDialogElement;
+    dialog.showModal();
+  }
+
+  function deleteModel(id: string) {
+    const dialog = document.getElementById(
+      `my_modal_delete_major${id}`
+    ) as HTMLDialogElement;
+    dialog.showModal();
+  }
+
   return (
     <div className="mt-6 w-full">
       <div className="flex flex-col gap-4 justify-center items-center">
@@ -24,15 +38,23 @@ export default function MajorList({ majors }: { majors: Majors[] }) {
                   <div className="font-bold">{major.name}</div>
                 </div>
               </Link>
-              <details className="dropdown">
-                <summary className="btn m-1 px-2 border-none">
-                  <EllipsisVertical />
-                </summary>
-                <ul className="menu dropdown-content gap-1 inline-block z-[1] p-2 shadow bg-gray-500">
+              <div className="flex gap-2">
+                <div
+                  className="Lucide-icon"
+                  onClick={() => showModal(major._id)}
+                >
+                  <Pencil className="" />
                   <UpdateMajor major={major} />
-                  <Deletemajor majorId={major._id} />
-                </ul>
-              </details>
+                </div>
+                <div
+                  className="Lucide-icon"
+                  onClick={() => deleteModel(major._id)}
+                >
+                  <Trash className="" />
+                  <UpdateMajor major={major} />
+                  <Deletemajor id={major._id} message={major.name} />
+                </div>
+              </div>
             </div>
           );
         })}
