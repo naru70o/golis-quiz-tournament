@@ -83,7 +83,7 @@ export default async function page({
           </div>
           <div className="flex items-center gap-2">
             <div className="text-[10px] min-w-9 tracking-widest py-1 px-2 bg-primary text-primary-content rounded-full">
-              soon
+              {status}
             </div>
             <div
               className={`text-[10px] tracking-widest py-1 px-2 bg-accent text-accent-content rounded-full ${
