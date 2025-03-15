@@ -1,5 +1,6 @@
-import Navigation from '@/components/navigation'
-import NewChallengeModel from '@/components/newChallenge'
+import ChallengesList from "@/components/challengesList";
+import Navigation from "@/components/navigation";
+import NewChallengeModel from "@/components/newChallenge";
 import connectiondb from "@/lib/db/connectiondb";
 import Challenge from "@/lib/schemas/model.challenge";
 import OpenModel from "@/ui/openModel";
@@ -34,7 +35,11 @@ export default async function page() {
   await connectiondb();
 
   const challenges = await challengesData();
-  console.log(challenges);
+  // largest number
+  const maxNumber = Math.max(
+    ...challenges.map((challenge) => challenge.number)
+  );
+  console.log(maxNumber);
 
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
@@ -43,9 +48,10 @@ export default async function page() {
         <OpenModel
           modelid={"major_form_modal"}
           modelName={"New Challenge"}
-          dialog={<NewChallengeModel />}
+          dialog={<NewChallengeModel lastNumber={maxNumber} />}
         />
       </div>
+      <ChallengesList challenges={challenges} />
     </div>
   );
 }

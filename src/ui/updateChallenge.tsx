@@ -1,30 +1,40 @@
 "use client"
-import { newChallenge } from "@/app/actions/challenge.action";
-import { useRef, useState, useTransition } from "react";
-import toast from "react-hot-toast";
+import { updateChallenge } from '@/app/actions/challenge.action';
+import React, { useRef, useState, useTransition } from 'react'
+import toast from 'react-hot-toast';
 
-export default function NewChallengeModel({
-  lastNumber,
-}: {
-  lastNumber: number;
-}) {
-  const [pending, startTransition] = useTransition();
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const [number, setNumber] = useState<number>(lastNumber + 1 || 0);
+type Challenge = {
+    _id: string;
+    challenge: string;
+    number: number;
+  };
+
+export default function UpdateChallenge({challenge}:{challenge:Challenge}) {
+      const [pending, startTransition] = useTransition();
+      const dialogRef = useRef<HTMLDialogElement>(null);
+      const [data, setData] = useState({number:challenge.number,challengeText:challenge.challenge});
 
   return (
-    <>
-      <dialog id="major_form_modal" className="modal" ref={dialogRef}>
+    <dialog
+        id={`my_modal_update_challenge${challenge._id}`}
+        className="modal"
+        ref={dialogRef}
+      >
         <div className="modal-box">
+          {/* Close Button */}
           <form method="dialog" className="flex gap-2 justify-end">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               x
             </button>
           </form>
+
           <form
             action={async (formData: FormData) => {
               startTransition(async () => {
-                const { success, message } = await newChallenge(formData);
+                const { success, message } = await updateChallenge(
+                    formData,
+                    challenge._id
+                );
                 dialogRef.current?.close();
                 if (success) {
                   toast.success(message);
@@ -36,32 +46,29 @@ export default function NewChallengeModel({
             className="flex flex-col justify-center items-center"
           >
             <div className="font-medium mt-4">
-              Here is your input to add a new challenge
+              here is your input to Update the Faculty
             </div>
             <div className="flex flex-col gap-2 w-full mt-6">
               <input
+                value={data.challengeText}
                 name="challenge"
                 type="text"
-                placeholder="challenge"
+                onChange={(e) => setData({...data,challengeText:e.target.value})}
                 className="input input-bordered w-full"
-                required
               />
               <input
+                value={data.number}
                 name="number"
                 type="text"
-                value={number}
-                onChange={(e) => setNumber(Number(e.target.value))}
-                placeholder="number"
+                onChange={(e) => setData({...data,number:Number(e.target.value)})}
                 className="input input-bordered w-full"
-                required
               />
               <button className="btn btn-primary" disabled={pending}>
-                add
+                update
               </button>
             </div>
           </form>
         </div>
       </dialog>
-    </>
-  );
+  )
 }
