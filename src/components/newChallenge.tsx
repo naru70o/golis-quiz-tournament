@@ -1,31 +1,32 @@
 "use client"
-import React, { useRef, useTransition } from 'react'
-import toast from 'react-hot-toast';
+import { newChallenge } from "@/app/actions/challenge.action";
+import { useRef, useTransition } from "react";
+import toast from "react-hot-toast";
 
 export default function NewChallengeModel() {
- const [pending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
       <dialog id="major_form_modal" className="modal" ref={dialogRef}>
         <div className="modal-box">
-      <form method="dialog" className="flex gap-2 justify-end">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-            x
-          </button>
-        </form>
+          <form method="dialog" className="flex gap-2 justify-end">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              x
+            </button>
+          </form>
           <form
             action={async (formData: FormData) => {
-            //   startTransition(async () => {
-            //     const { success, message } = await newMajor(formData);
-            //     dialogRef.current?.close();
-            //     if (success) {
-            //       toast.success(message);
-            //     } else {
-            //       toast.error(message);
-            //     }
-            //   });
+              startTransition(async () => {
+                const { success, message } = await newChallenge(formData);
+                dialogRef.current?.close();
+                if (success) {
+                  toast.success(message);
+                } else {
+                  toast.error(message);
+                }
+              });
             }}
             className="flex flex-col justify-center items-center"
           >
@@ -37,6 +38,13 @@ export default function NewChallengeModel() {
                 name="challenge"
                 type="text"
                 placeholder="challenge"
+                className="input input-bordered w-full"
+                required
+              />
+              <input
+                name="number"
+                type="text"
+                placeholder="number"
                 className="input input-bordered w-full"
                 required
               />
