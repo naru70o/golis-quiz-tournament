@@ -13,7 +13,6 @@ export async function newChallenge(formData: FormData) {
     };
 
     const existOne = await Challenge.find({ number: formData.get("number") });
-    console.log("here is the", existOne);
     if (existOne.length > 0)
       return {
         success: false,

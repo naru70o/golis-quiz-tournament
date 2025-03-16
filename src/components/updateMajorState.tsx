@@ -30,7 +30,6 @@ export default function UpdateMajorState({
     }
   }, [data]);
 
-  console.log(data, "this was returned from the update state major");
 
   return (
     <dialog id={_id} className="modal modal-bottom sm:modal-middle">

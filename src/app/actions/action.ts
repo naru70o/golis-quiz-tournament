@@ -74,7 +74,6 @@ export const majorSetStatusActive = async (id: string) => {
       status: "active",
     });
     revalidateTag("majors");
-    console.log("major updated successfully");
     return { success: true, message: "major updated successfully" };
   } catch (error) {
     return { success: false, message: "major not updated" };
@@ -89,7 +88,6 @@ export const majorSetStatusFinished = async (id: string, result: number) => {
       result: result,
     });
     revalidateTag("majors");
-    console.log("major updated successfully");
     return { success: true, message: "major updated successfully" };
   } catch (error) {
     return { success: false, message: "major not updated" };
@@ -156,7 +154,6 @@ export const newQuestion = async (
       totalPoints, // Store correct answer index
     });
 
-    console.log(newQuestion);
 
     await newQuestion.save();
     revalidateTag("questions");

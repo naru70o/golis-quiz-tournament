@@ -26,7 +26,6 @@ majorSchema.pre("findOneAndDelete", async function (next) {
   try {
     const _id = this.getQuery()._id;
     await Question.deleteMany({ majorId: _id });
-    console.log("Deleted all questions with majorId: ", _id);
     next();
   } catch (err: unknown) {
     next(); 

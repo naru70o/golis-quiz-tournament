@@ -12,7 +12,6 @@ export default function Deletemajor({
   id: string;
 }) {
   const [pending, startTransition] = useTransition();
-  console.log(id);
   return (
     <div>
       <dialog

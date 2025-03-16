@@ -40,15 +40,20 @@ export default async function page() {
   const maxNumber = Math.max(
     ...challenges.map((challenge) => challenge.number)
   );
-  console.log(maxNumber);
 
+  console.log(maxNumber);
   return (
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
       <Navigation />
       <div className="self-end">
         <div className="flex gap-2 items-center">
-          <Link href="/challenge/pick-number">
-            <button className="btn btn-secondary">Pick your number</button>
+          <Link href={challenges.length === 0 ? "#" : "/challenge/pick-number"}>
+            <button
+              disabled={challenges.length === 0}
+              className="btn btn-secondary"
+            >
+              Pick your number
+            </button>
           </Link>
           <OpenModel
             modelid={"major_form_modal"}

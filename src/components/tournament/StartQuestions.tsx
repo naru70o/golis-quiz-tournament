@@ -138,7 +138,6 @@ export default function StartQuiz({ data }: { data: Question[] }) {
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  console.log(points);
 
   const numQuestions = questions.length;
 

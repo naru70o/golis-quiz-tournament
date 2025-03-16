@@ -12,7 +12,6 @@ type Challenge = {
 
 export default function NumberList({ numbers }: { numbers: Challenge[] }) {
   const [selectedNumbers, setSelectedNumbers] = useState<Challenge[]>([]);
-  console.log("selected numbers", selectedNumbers);
   // Load stored numbers from local storage when the component mounts
   useEffect(() => {
     const storedNumbers = localStorage.getItem("selectedNumbers");

@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 
 export default function Navigation() {
   const pathName = usePathname();
-  console.log(pathName);
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">

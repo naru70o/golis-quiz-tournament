@@ -30,7 +30,6 @@ function Options({
     <div className="grid grid-cols-2 gap-y-9 gap-x-32 mb-[3.2rem] container max-w-7xl mx-auto -translate-y-[20%]">
       {questions.options &&
         questions.options.map((option, index) => {
-          console.log("option ...", index);
           return (
             <button
               className={`bg-[#FBE726] text-black min-w-[300px] min-h-[108px] rounded-3xl relative  ${

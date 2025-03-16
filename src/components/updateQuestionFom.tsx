@@ -33,7 +33,6 @@ export default function UpdateQuestionForm({
     createdAt,
   } = question;
 
-  console.log("here is the question so take a look at it", question);
 
   const [data, action, isPending] = useActionState(updateQuestion, undefined);
   const [majorIdInput, setMajorIdInput] = useState(majorId);

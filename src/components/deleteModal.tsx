@@ -12,7 +12,6 @@ export default function DeleteModal({
   id: string;
 }) {
   const [pending, startTransition] = useTransition();
-  console.log(id);
   return (
     <div>
       <dialog
