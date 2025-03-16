@@ -6,6 +6,7 @@ import Challenge from "@/lib/schemas/model.challenge";
 import OpenModel from "@/ui/openModel";
 import { Types } from "mongoose";
 import { unstable_cache } from "next/cache";
+import Link from "next/link";
 import React from "react";
 
 type Challenge = {
@@ -45,11 +46,16 @@ export default async function page() {
     <div className="flex flex-col items-center justify-center max-w-7xl mx-auto py-12 px-4">
       <Navigation />
       <div className="self-end">
-        <OpenModel
-          modelid={"major_form_modal"}
-          modelName={"New Challenge"}
-          dialog={<NewChallengeModel lastNumber={maxNumber} />}
-        />
+        <div className="flex gap-2 items-center">
+          <Link href="/challenge/pick-number">
+            <button className="btn btn-secondary">Pick your number</button>
+          </Link>
+          <OpenModel
+            modelid={"major_form_modal"}
+            modelName={"New Challenge"}
+            dialog={<NewChallengeModel lastNumber={maxNumber} />}
+          />
+        </div>
       </div>
       <ChallengesList challenges={challenges} />
     </div>
