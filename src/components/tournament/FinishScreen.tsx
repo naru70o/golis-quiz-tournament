@@ -40,6 +40,9 @@ function FinishScreen({
           onClick={async () => {
             dispatch({ type: ActionKind.restart });
             await majorSetStatusFinished(majorId, points);
+            if (typeof window !== "undefined") {
+              localStorage.removeItem("state");
+            }
           }}
         >
           Restart quiz
