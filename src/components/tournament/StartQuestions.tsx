@@ -58,6 +58,8 @@ export type ActionType =
   | { type: ActionKind.restart }
   | { type: ActionKind.tick };
 
+const SECS_PER_QUESTION = 30;
+
 const initialState: InitialStateType = {
   questions: [],
   status: "loading",
@@ -68,7 +70,32 @@ const initialState: InitialStateType = {
   secondsRemaining: null,
 };
 
-const SECS_PER_QUESTION = 30;
+// saving the state
+const saveState = (state: InitialStateType) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem("state", serializedState);
+  } catch (error) {
+    console.log("Error saving state: ", error);
+  }
+};
+
+// loading the state
+
+const loadState = () => {
+  try {
+    if (typeof window !== "undefined") {
+      const state = localStorage.getItem("state");
+      if (state === null) return initialState;
+
+      return JSON.parse(state);
+    }
+    return initialState;
+  } catch (error) {
+    console.log("Error loading state: ", error);
+    return initialState;
+  }
+};
 
 function reducer(
   state: InitialStateType,
@@ -76,7 +103,11 @@ function reducer(
 ): InitialStateType {
   switch (action.type) {
     case ActionKind.dataRecieved:
-      return { ...state, questions: action.payload, status: "ready" };
+      return {
+        ...state,
+        questions: action.payload,
+        status: "ready",
+      };
 
     case ActionKind.dataFailed:
       return { ...state, status: "error" };
@@ -113,7 +144,7 @@ function reducer(
 
     case ActionKind.restart:
       return {
-        ...initialState,
+        ...state,
         questions: state.questions,
         status: "ready",
       };
@@ -133,11 +164,23 @@ function reducer(
 }
 
 export default function StartQuiz({ data }: { data: Question[] }) {
-  const [
-    { questions, status, index, answer, points, highscore, secondsRemaining },
-    dispatch,
-  ] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState, (initial) => {
+    if (typeof window !== "undefined") {
+      const saved = loadState();
+      return { ...initial, ...saved };
+    }
+    return initial;
+  });
 
+  const {
+    questions,
+    status,
+    index,
+    answer,
+    points,
+    highscore,
+    secondsRemaining,
+  } = state;
 
   const numQuestions = questions.length;
 
@@ -145,6 +188,10 @@ export default function StartQuiz({ data }: { data: Question[] }) {
     (prev: number, cur: Question) => prev + cur.totalPoints,
     0
   );
+
+  useEffect(() => {
+    saveState(state);
+  }, [state]);
 
   useEffect(() => {
     dispatch({ type: ActionKind.dataRecieved, payload: data });
