@@ -45,4 +45,4 @@ A web application for managing faculty challenges and tournaments with real-time
 1. Clone the repository
    ```bash
    git clone https://github.com/naru70o/tournament-system.git
-   cd tournament-system
+
