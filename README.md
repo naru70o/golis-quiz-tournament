@@ -33,12 +33,12 @@ A web application for managing faculty challenges and tournaments with real-time
 
 ## Tech Stack
 
-- **Frontend**: Next.js, React, TypeScript
+- **Frontend**: Next.js, TypeScript
 - **Backend**: Next.js API routes, Server Actions
 - **Database**: MongoDB (with Mongoose)
 - **Authentication**: Clerk
 - **State Management**: localStorage, Suspense
-- **Styling**: CSS Modules
+- **Styling**: Tailwind CSS , Dasiy UI
 
 ## Installation
 
