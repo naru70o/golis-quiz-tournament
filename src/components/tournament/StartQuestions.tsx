@@ -1,6 +1,9 @@
 "use client"
 
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { useAppDispatch } from "@/hooks/hooks";
+import useStoreState from "@/hooks/useStoreState";
+import { dataRecieved } from "@/state/quizSlice";
+import { useEffect } from "react";
 import Logo from "../Logo";
 import Error from "./Error";
 import FinishScreen from "./FinishScreen";
@@ -9,10 +12,7 @@ import Loader from "./Loader";
 import Main from "./Main";
 import NextButton from "./nextButton";
 import Question from "./Question";
-import { Question as QuestionType } from "./StartQuestions-v1";
 import StartScreen from "./StartScreen";
-import { useEffect } from "react";
-import { dataRecieved } from "@/state/quizSlice";
 
 // Typing
 export type Option = {
@@ -41,22 +41,16 @@ export type InitialStateType = {
   secondsRemaining: number | null;
 };
 
-export default function StartQuiz({ data }: { data: QuestionType[] }) {
-
-  const questions = useAppSelector((state) => state.tournament.questions);
-  const status = useAppSelector((state) => state.tournament.status);
-  const points = useAppSelector((state) => state.tournament.points);
-  const highscore = useAppSelector((state) => state.tournament.highscore);
-  const index = useAppSelector((state) => state.tournament.index);
-  const answer = useAppSelector((state) => state.tournament.answer);
+export default function StartQuiz({ data }: { data: Question[] }) {
+  const { questions, status, points, highscore, index } = useStoreState();
 
   const dispatch = useAppDispatch();
 
-  console.log("the status is:", status);
+  console.log("the status is:", status,questions);
 
   const numQuestions = questions.length;
   const maxPossiblePoints = questions.reduce(
-    (prev: number, cur: QuestionType) => prev + cur.totalPoints,
+    (prev: number, cur: Question) => prev + cur.totalPoints,
     0
   );
 
@@ -81,9 +75,6 @@ export default function StartQuiz({ data }: { data: QuestionType[] }) {
         {status === "active" && (
           <>
             <Question
-              questions={questions[index]}
-              dispatch={dispatch}
-              answer={answer}
             />
             <Footer>
               {/* <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} /> */}
@@ -97,10 +88,7 @@ export default function StartQuiz({ data }: { data: QuestionType[] }) {
               </p>
 
               <NextButton
-                index={index}
                 numQuestions={numQuestions}
-                dispatch={dispatch}
-                answer={answer}
               />
             </Footer>
           </>

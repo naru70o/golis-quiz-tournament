@@ -48,7 +48,7 @@ export const tournamentSlice = createSlice({
     state.index++;
     state.answer=null;
    },
-   finish:(state) => {
+   finishQuiz:(state) => {
     state.status= "finished";
     if(state.points > state.highscore){
       state.highscore= state.points;
@@ -62,5 +62,5 @@ export const tournamentSlice = createSlice({
   }
 })
 
-export const {starQuiz,newAnswer,nextQuestion,finish,restart,dataRecieved,dataFailed}=tournamentSlice.actions;
+export const {starQuiz,newAnswer,nextQuestion,finishQuiz,restart,dataRecieved,dataFailed}=tournamentSlice.actions;
 export default tournamentSlice;

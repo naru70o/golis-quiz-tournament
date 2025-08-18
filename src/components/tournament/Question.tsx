@@ -1,17 +1,10 @@
 // import { useQuiz } from "../contexts/QuizContext";
+import useStoreState from "@/hooks/useStoreState";
 import Image from "next/image";
 import Options from "./Options";
-import { ActionType, Question as QuestionType } from "./StartQuestions-v1";
 
-function Question({
-  questions,
-  dispatch,
-  answer,
-}: {
-  questions: QuestionType;
-  dispatch: React.Dispatch<ActionType>;
-  answer: number | null;
-}) {
+function Question() {
+  const { questions,index } = useStoreState();
   return (
     <>
       <div className="flex items-center bg-[#FBE726] min-h-36 max-w-[634px] relative rounded-3xl overflow-clip mx-auto -translate-y-[100%] pr-3">
@@ -19,10 +12,10 @@ function Question({
           <Image src="/yellow-question-mark.png" alt="question-mark" fill />
         </div>
         <div className="text-3xl self-center w-full font-bold text-black text-center ml-[25%]">
-          {questions.question} ?
+          {questions[index].question} ?
         </div>
       </div>
-      <Options questions={questions} dispatch={dispatch} answer={answer} />
+      <Options/>
     </>
   );
 }
