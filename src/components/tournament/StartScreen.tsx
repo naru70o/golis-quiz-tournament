@@ -1,11 +1,13 @@
-import { ActionType,ActionKind } from "@/components/tournament/StartQuestions";
+import { starQuiz } from "@/state/quizSlice";
+import { AppDispatch } from "@/state/store";
+import { Dispatch } from "@reduxjs/toolkit";
 
 function StartScreen({
   numQuestions,
   dispatch,
 }: {
   numQuestions: number;
-  dispatch: React.Dispatch<ActionType>;
+  dispatch: AppDispatch;
 }) {
   return (
     <div className="flex flex-col items-center justify-center">
@@ -15,7 +17,7 @@ function StartScreen({
       <h3 className="mb-4">{numQuestions} questions for this major</h3>
       <button
         className="btn btn-ui"
-        onClick={() => dispatch({ type: ActionKind.start })}
+        onClick={() => dispatch(starQuiz())}
       >
         Let&apos;s start
       </button>

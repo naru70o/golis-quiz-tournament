@@ -1,7 +1,7 @@
 // import { useQuiz } from "../contexts/QuizContext";
 import Image from "next/image";
 import Options from "./Options";
-import { ActionType, Question as QuestionType } from "./StartQuestions";
+import { ActionType, Question as QuestionType } from "./StartQuestions-v1";
 
 function Question({
   questions,

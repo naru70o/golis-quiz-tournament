@@ -1,0 +1,66 @@
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { InitialStateType,Option } from "@/components/tournament/StartQuestions";
+
+export type Question = {
+  _id: string;
+  question: string;
+  majorId: string;
+  options: Option[];
+  correctOptionIndex: number;
+  totalPoints: number;
+  createdAt: Date;
+}
+
+const initialState: InitialStateType = {
+  questions: [],
+  status: "loading",
+  index: 0,
+  answer: null,
+  points: 0,
+  highscore: 0,
+  secondsRemaining: null,
+}
+
+export const tournamentSlice = createSlice({
+  name: "tournament",
+  initialState,
+  reducers: {
+   dataRecieved:(state,action:PayloadAction<Question[]>) => {
+        state.questions= action.payload;
+        state.status= "ready";
+   },
+   dataFailed:(state) => {
+    state.status= "error";
+   },
+   starQuiz:(state)=>{
+    state.status= "active";
+   },
+   newAnswer:(state,action:PayloadAction<number|null>) => {
+    const question = state.questions[state.index];
+    if(!question) return state;
+    state.answer= action.payload;
+    if(action.payload === question.correctOptionIndex){
+        state.points += question.totalPoints;
+    } 
+   },
+   nextQuestion:(state) => {
+    state.index++;
+    state.answer=null;
+   },
+   finish:(state) => {
+    state.status= "finished";
+    if(state.points > state.highscore){
+      state.highscore= state.points;
+    }
+   },
+   restart:(state) => {
+    state.index=0;
+    state.points=0;
+    state.status= "ready";
+   },
+  }
+})
+
+export const {starQuiz,newAnswer,nextQuestion,finish,restart,dataRecieved,dataFailed}=tournamentSlice.actions;
+export default tournamentSlice;
