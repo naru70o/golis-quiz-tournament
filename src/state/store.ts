@@ -1,10 +1,12 @@
+import { loadState, saveState } from '@/util/localStorage'
 import { configureStore } from '@reduxjs/toolkit'
 import tournamentSlice from './quizSlice'
+
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      tournament: tournamentSlice.reducer,
+      tournament: tournamentSlice,
     },
   })
 }

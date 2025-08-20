@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { InitialStateType,Option } from "@/components/tournament/StartQuestions";
+import { loadState } from "@/util/localStorage";
+
+
 
 export type Question = {
   _id: string;
@@ -12,7 +15,15 @@ export type Question = {
   createdAt: Date;
 }
 
-const initialState: InitialStateType = {
+const preloadedState = loadState()
+let initialState = {} as InitialStateType;
+
+if(preloadedState?.tournament.status === "active"){
+  console.log(preloadedState.tournament.status, "fooooooo");
+initialState = preloadedState.tournament
+} else {
+  console.log("oh shitttttttt");
+  initialState = {
   questions: [],
   status: "loading",
   index: 0,
@@ -21,12 +32,18 @@ const initialState: InitialStateType = {
   highscore: 0,
   secondsRemaining: null,
 }
+}
+
+
 
 export const tournamentSlice = createSlice({
   name: "tournament",
   initialState,
   reducers: {
-   dataRecieved:(state,action:PayloadAction<Question[]>) => {
+    preloadedState:(state, action: PayloadAction<InitialStateType>) => {
+      return { ...state, ...action.payload }
+    },
+    dataRecieved:(state,action:PayloadAction<Question[]>) => {
         state.questions= action.payload;
         state.status= "ready";
    },
@@ -63,4 +80,4 @@ export const tournamentSlice = createSlice({
 })
 
 export const {starQuiz,newAnswer,nextQuestion,finishQuiz,restart,dataRecieved,dataFailed}=tournamentSlice.actions;
-export default tournamentSlice;
+export default tournamentSlice.reducer;

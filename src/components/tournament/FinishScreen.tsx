@@ -42,9 +42,9 @@ function FinishScreen({
           onClick={async () => {
             dispatch(restart());
             await majorSetStatusFinished(majorId, points);
-            // if (typeof window !== "undefined") {
-            //   localStorage.removeItem("state");
-            // }
+            if (typeof window !== "undefined") {
+              localStorage.removeItem("reduxState");
+            }
           }}
         >
           Restart quiz
