@@ -20,3 +20,8 @@ export const loadState = () => {
     return undefined;
   }
 };
+
+export const resetLocalState = ()=>{
+  if(typeof window === "undefined") return;
+  localStorage.removeItem("reduxState");
+}

@@ -3,8 +3,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { InitialStateType,Option } from "@/components/tournament/StartQuestions";
 import { loadState } from "@/util/localStorage";
 
-
-
 export type Question = {
   _id: string;
   question: string;
@@ -31,8 +29,6 @@ initialState = preloadedState.tournament
   secondsRemaining: null,
 }
 }
-
-
 
 export const tournamentSlice = createSlice({
   name: "tournament",
