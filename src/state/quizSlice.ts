@@ -19,10 +19,8 @@ const preloadedState = loadState()
 let initialState = {} as InitialStateType;
 
 if(preloadedState?.tournament.status === "active"){
-  console.log(preloadedState.tournament.status, "fooooooo");
 initialState = preloadedState.tournament
 } else {
-  console.log("oh shitttttttt");
   initialState = {
   questions: [],
   status: "loading",

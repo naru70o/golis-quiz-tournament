@@ -1,3 +1,4 @@
+/*
 import { useEffect } from "react";
 import { ActionKind, ActionType } from "./StartQuestions";
 
@@ -32,3 +33,4 @@ function Timer({
 }
 
 export default Timer;
+*/
