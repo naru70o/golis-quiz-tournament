@@ -1,6 +1,9 @@
 "use client"
 
-import { useEffect, useReducer } from "react";
+import { useAppDispatch } from "@/hooks/hooks";
+import useStoreState from "@/hooks/useStoreState";
+import { dataRecieved } from "@/state/quizSlice";
+import { useEffect } from "react";
 import Logo from "../Logo";
 import Error from "./Error";
 import FinishScreen from "./FinishScreen";
@@ -11,7 +14,8 @@ import NextButton from "./nextButton";
 import Question from "./Question";
 import StartScreen from "./StartScreen";
 
-type Option = {
+// Typing
+export type Option = {
   _id: string;
   text: string;
 };
@@ -26,7 +30,7 @@ export type Question = {
   createdAt: Date;
 };
 
-// Typing
+
 export type InitialStateType = {
   questions: Question[];
   status: string;
@@ -37,172 +41,29 @@ export type InitialStateType = {
   secondsRemaining: number | null;
 };
 
-export enum ActionKind {
-  dataRecieved = "dataRecieved",
-  dataFailed = "dataFailed",
-  start = "start",
-  newAnswer = "newAnswer",
-  nextQuestion = "nextQuestion",
-  finish = "finish",
-  restart = "restart",
-  tick = "tick",
-}
-
-export type ActionType =
-  | { type: ActionKind.dataRecieved; payload: Question[] }
-  | { type: ActionKind.dataFailed }
-  | { type: ActionKind.start }
-  | { type: ActionKind.newAnswer; payload: number | null }
-  | { type: ActionKind.nextQuestion }
-  | { type: ActionKind.finish }
-  | { type: ActionKind.restart }
-  | { type: ActionKind.tick };
-
-const SECS_PER_QUESTION = 30;
-
-const initialState: InitialStateType = {
-  questions: [],
-  status: "loading",
-  index: 0,
-  answer: null,
-  points: 0,
-  highscore: 0,
-  secondsRemaining: null,
-};
-
-// saving the state
-const saveState = (state: InitialStateType) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem("state", serializedState);
-  } catch (error) {
-    console.log("Error saving state: ", error);
-  }
-};
-
-// loading the state
-
-const loadState = () => {
-  try {
-    if (typeof window !== "undefined") {
-      const state = localStorage.getItem("state");
-      if (state === null) return initialState;
-
-      return JSON.parse(state);
-    }
-    return initialState;
-  } catch (error) {
-    console.log("Error loading state: ", error);
-    return initialState;
-  }
-};
-
-function reducer(
-  state: InitialStateType,
-  action: ActionType
-): InitialStateType {
-  switch (action.type) {
-    case ActionKind.dataRecieved:
-      return {
-        ...state,
-        questions: action.payload,
-        status: "ready",
-      };
-
-    case ActionKind.dataFailed:
-      return { ...state, status: "error" };
-
-    case ActionKind.start:
-      return {
-        ...state,
-        status: "active",
-        secondsRemaining: SECS_PER_QUESTION,
-      };
-
-    case ActionKind.newAnswer:
-      const question = state.questions[state.index];
-      if (!question) return state;
-
-      return {
-        ...state,
-        answer: action.payload,
-        points:
-          action.payload === question.correctOptionIndex
-            ? state.points + question.totalPoints
-            : state.points,
-      };
-
-    case ActionKind.nextQuestion:
-      return { ...state, index: state.index + 1, answer: null };
-
-    case ActionKind.finish:
-      return {
-        ...state,
-        status: "finished",
-        highscore: Math.max(state.highscore, state.points),
-      };
-
-    case ActionKind.restart:
-      return {
-        ...state,
-        questions: state.questions,
-        status: "ready",
-      };
-
-    case ActionKind.tick:
-      if (state.secondsRemaining === null || state.secondsRemaining <= 0) {
-        return { ...state, status: "finished", secondsRemaining: 0 };
-      }
-      return {
-        ...state,
-        secondsRemaining: state.secondsRemaining - 1,
-      };
-
-    default:
-      return state;
-  }
-}
-
 export default function StartQuiz({ data }: { data: Question[] }) {
-  const [state, dispatch] = useReducer(reducer, initialState, (initial) => {
-    if (typeof window !== "undefined") {
-      const saved = loadState();
-      return { ...initial, ...saved };
-    }
-    return initial;
-  });
+  const { questions, status, points, highscore, index } = useStoreState();
 
-  const {
-    questions,
-    status,
-    index,
-    answer,
-    points,
-    highscore,
-    secondsRemaining,
-  } = state;
+  const dispatch = useAppDispatch();
+
+  console.log("the status is:", status,questions);
 
   const numQuestions = questions.length;
-
   const maxPossiblePoints = questions.reduce(
     (prev: number, cur: Question) => prev + cur.totalPoints,
     0
   );
 
   useEffect(() => {
-    saveState(state);
-  }, [state]);
-
-  useEffect(() => {
-    dispatch({ type: ActionKind.dataRecieved, payload: data });
-  }, [data]);
+    dispatch(dataRecieved(data));
+  }, [data,dispatch]);
 
   return (
-    <div className="bg-[#33479D] h-screen ">
-      <div className="flex justify-between items-center">
-        <div className="bg-[url('/ramadan-dec.png')] bg-cover bg-center h-60 w-[354px] -translate-x-12"></div>
-        <div className="h-26 w-26 bg-[#FBE726] rounded-full -translate-x-[35%] ">
-          <Logo />
+      <div className="bg-[#33479D] h-screen ">
+        <div className="flex justify-between items-center">
+          <div className="bg-[url('/ramadan-dec.png')] bg-cover bg-center h-60 w-[354px] -translate-x-12"></div>
+          <div className="h-26 w-26 bg-[#FBE726] rounded-full -translate-x-[35%] ">
+            <Logo />
         </div>
       </div>
       <Main>
@@ -214,9 +75,6 @@ export default function StartQuiz({ data }: { data: Question[] }) {
         {status === "active" && (
           <>
             <Question
-              questions={questions[index]}
-              dispatch={dispatch}
-              answer={answer}
             />
             <Footer>
               {/* <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} /> */}
@@ -230,10 +88,7 @@ export default function StartQuiz({ data }: { data: Question[] }) {
               </p>
 
               <NextButton
-                index={index}
                 numQuestions={numQuestions}
-                dispatch={dispatch}
-                answer={answer}
               />
             </Footer>
           </>

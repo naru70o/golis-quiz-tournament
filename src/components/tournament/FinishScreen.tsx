@@ -1,8 +1,10 @@
 "use client";
 
 import { majorSetStatusFinished } from "@/app/actions/action";
-import { ActionKind, ActionType, Question } from "./StartQuestions";
+import { Question } from "./StartQuestions";
 import Link from "next/link";
+import { restart } from "@/state/quizSlice";
+import { AppDispatch } from "@/state/store";
 
 function FinishScreen({
   points,
@@ -14,7 +16,7 @@ function FinishScreen({
   points: number;
   maxPossiblePoints: number;
   highscore: number;
-  dispatch: React.Dispatch<ActionType>;
+  dispatch: AppDispatch;
   question: Question[];
 }) {
   const percentage = (points / maxPossiblePoints) * 100;
@@ -38,10 +40,10 @@ function FinishScreen({
         <button
           className="btn px-8"
           onClick={async () => {
-            dispatch({ type: ActionKind.restart });
+            dispatch(restart());
             await majorSetStatusFinished(majorId, points);
             if (typeof window !== "undefined") {
-              localStorage.removeItem("state");
+              localStorage.removeItem("reduxState");
             }
           }}
         >

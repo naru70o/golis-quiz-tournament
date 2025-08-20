@@ -5,6 +5,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import FullSpinner from "@/ui/fullSpinner";
 import { ClerkProvider } from "@clerk/nextjs";
+import StoreProvider from "@/state/StoreProvider";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -27,10 +28,12 @@ export default function RootLayout({
         className={`${nunito.variable} antialiased text-green-200 overflow-x-hidden`}
       >
         <ClerkProvider>
+          <StoreProvider>
           <Suspense fallback={<FullSpinner />}>
             <main>{children}</main>
           </Suspense>
           <Toaster />
+          </StoreProvider>
         </ClerkProvider>
       </body>
     </html>

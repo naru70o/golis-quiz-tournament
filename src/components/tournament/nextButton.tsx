@@ -1,24 +1,19 @@
-import React from "react";
-import { ActionType, ActionKind } from "./StartQuestions";
+import useStoreState from "@/hooks/useStoreState";
+import { finishQuiz, nextQuestion } from "@/state/quizSlice";
 
 function NextButton({
-  dispatch,
-  answer,
-  index,
   numQuestions,
 }: {
-  dispatch: React.Dispatch<ActionType>;
-  answer: number | null;
-  index: number; // current question index
   numQuestions: number; // total number of questions
 }) {
+  const {dispatch,index,answer} = useStoreState();
   if (answer === null) return null;
 
   if (index < numQuestions - 1)
     return (
       <button
         className="btn px-8"
-        onClick={() => dispatch({ type: ActionKind.nextQuestion })}
+        onClick={() => dispatch(nextQuestion())}
       >
         Next
       </button>
@@ -28,7 +23,7 @@ function NextButton({
     return (
       <button
         className="btn px-8"
-        onClick={() => dispatch({ type: ActionKind.finish })}
+        onClick={() => dispatch(finishQuiz())}
       >
         finish
       </button>
