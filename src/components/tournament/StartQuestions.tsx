@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useAppDispatch } from "@/hooks/hooks";
 import useStoreState from "@/hooks/useStoreState";
@@ -30,7 +30,6 @@ export type Question = {
   createdAt: Date;
 };
 
-
 export type InitialStateType = {
   questions: Question[];
   status: string;
@@ -46,7 +45,7 @@ export default function StartQuiz({ data }: { data: Question[] }) {
 
   const dispatch = useAppDispatch();
 
-  console.log("the status is:", status,questions);
+  console.log("the status is:", status, questions);
 
   const numQuestions = questions.length;
   const maxPossiblePoints = questions.reduce(
@@ -56,16 +55,11 @@ export default function StartQuiz({ data }: { data: Question[] }) {
 
   useEffect(() => {
     dispatch(dataRecieved(data));
-  }, [data,dispatch]);
+  }, [data, dispatch]);
 
   return (
-      <div className="bg-[#33479D] h-screen ">
-        <div className="flex justify-between items-center">
-          <div className="bg-[url('/ramadan-dec.png')] bg-cover bg-center h-60 w-[354px] -translate-x-12"></div>
-          <div className="h-26 w-26 bg-[#FBE726] rounded-full -translate-x-[35%] ">
-            <Logo />
-        </div>
-      </div>
+    <div className='h-screen bg-backgroundHome bg-cover bg-center bg-no-repeat'>
+      <div className='flex justify-between items-center'></div>
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
@@ -74,8 +68,7 @@ export default function StartQuiz({ data }: { data: Question[] }) {
         )}
         {status === "active" && (
           <>
-            <Question
-            />
+            <Question />
             <Footer>
               {/* <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} /> */}
 
@@ -87,9 +80,7 @@ export default function StartQuiz({ data }: { data: Question[] }) {
                 <strong>{points}</strong> / {maxPossiblePoints}
               </p>
 
-              <NextButton
-                numQuestions={numQuestions}
-              />
+              <NextButton numQuestions={numQuestions} />
             </Footer>
           </>
         )}

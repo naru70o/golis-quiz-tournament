@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { Suspense } from "react";
@@ -7,9 +7,10 @@ import FullSpinner from "@/ui/fullSpinner";
 import { ClerkProvider } from "@clerk/nextjs";
 import StoreProvider from "@/state/StoreProvider";
 
-const nunito = Nunito({
-  variable: "--font-nunito",
+const quicksand = Quicksand({
+  variable: "--font-quicksand",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -23,16 +24,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark">
+    <html lang='en' data-theme='dark'>
       <body
-        className={`${nunito.variable} antialiased text-green-200 overflow-x-hidden`}
+        className={`${quicksand.variable} antialiased text-green-200 overflow-x-hidden`}
       >
         <ClerkProvider>
           <StoreProvider>
-          <Suspense fallback={<FullSpinner />}>
-            <main>{children}</main>
-          </Suspense>
-          <Toaster />
+            <Suspense fallback={<FullSpinner />}>
+              <main>{children}</main>
+            </Suspense>
+            <Toaster />
           </StoreProvider>
         </ClerkProvider>
       </body>
