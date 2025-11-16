@@ -89,7 +89,7 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
                 <input
                   name="optionThree"
                   type="text"
-                  placeholder="option index (2)"
+                  placeholder="option Three index (2)"
                   className="input input-bordered w-full"
                 />
                 {/* option four */}
