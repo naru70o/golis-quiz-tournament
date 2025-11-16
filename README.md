@@ -2,7 +2,7 @@
 
 A web application for managing faculty challenges and tournaments with real-time updates and user authentication.
 
-![Tournament UI](public/Quiz-Bg-2.png)
+![Tournament UI](public/Quiz-Bg-2.webp)
 
 ## Features
 
