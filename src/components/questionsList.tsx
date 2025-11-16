@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Pencil, Trash } from "lucide-react";
 import DeleteModal from "./deleteModal";
 import UpdateQuestionForm from "./updateQuestionFom";
@@ -27,9 +27,9 @@ const optionIdentifier = (index: number) => {
   } else if (index === 3) {
     return "D";
   }
-}
+};
 
-export default function QuestionsList({question}: {question: Question[]}) {
+export default function QuestionsList({ question }: { question: Question[] }) {
   const questions = question;
 
   function UpdateshowModal(elementIid: string) {
@@ -42,6 +42,16 @@ export default function QuestionsList({question}: {question: Question[]}) {
     modal.showModal();
   }
 
+  const formatQuestion = (questionText: string) => {
+    let formatted =
+      questionText.charAt(0).toUpperCase() + questionText.slice(1);
+
+    // Remove any existing trailing question marks and whitespace, then add one question mark
+    formatted = formatted.trim().replace(/\?+$/, "") + " ?";
+
+    return formatted;
+  };
+
   return (
     <div className="flex flex-col gap-2 w-full">
       {questions.map((question) => (
@@ -51,9 +61,7 @@ export default function QuestionsList({question}: {question: Question[]}) {
           key={question._id}
         >
           <div className="collapse-title text-xl font-medium">
-            {question.question.charAt(0).toUpperCase() +
-              question.question.slice(1)}{" "}
-            ?
+            {formatQuestion(question.question)}
           </div>
 
           <div className="collapse-content mt-1">
