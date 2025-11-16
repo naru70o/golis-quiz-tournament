@@ -46,16 +46,16 @@ function Options() {
           if (hasAnswered) {
             if (isCorrect) {
               // Correct answer - green
-              buttonStyle = "bg-green-500 text-white shadow-lg";
+              buttonStyle = "bg-[#FFECDB] text-black shadow-lg";
               circleStyle = "bg-white text-green-500";
             } else if (isSelected && !isCorrect) {
               // Selected but incorrect - red
-              buttonStyle = "bg-red-500 text-white shadow-lg";
-              circleStyle = "bg-white text-red-500";
+              buttonStyle = "bg-[#FE909D] text-white shadow-lg";
+              circleStyle = "bg-[#FF475D] text-white";
             } else {
               // Not selected and not correct
               buttonStyle = "bg-white text-black";
-              circleStyle = "bg-[#ffccdd] text-[#ff6699]";
+              circleStyle = "bg-[#FFECDB] text-[#FF475D]";
             }
           } else {
             // Not answered yet
