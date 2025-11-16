@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { newQuestion } from "@/app/actions/action";
 import { useActionState, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -50,7 +50,7 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
                 <input
                   name="correctOptionIndex"
                   type="text"
-                  placeholder="correct option"
+                  placeholder="correct option 0, 1, 2, or 3"
                   className="input input-bordered w-full"
                   required
                 />
@@ -75,28 +75,28 @@ export default function QuestionForm({ majorId }: { majorId: string }) {
                 <input
                   name="optionOne"
                   type="text"
-                  placeholder="option One"
+                  placeholder="option One index (0)"
                   className="input input-bordered w-full"
                 />
                 {/* option 2 */}
                 <input
                   name="optionTwo"
                   type="text"
-                  placeholder="option Two"
+                  placeholder="option Two index (1)"
                   className="input input-bordered w-full"
                 />
                 {/* option 3 */}
                 <input
                   name="optionThree"
                   type="text"
-                  placeholder="option Three"
+                  placeholder="option index (2)"
                   className="input input-bordered w-full"
                 />
                 {/* option four */}
                 <input
                   name="optionFour"
                   type="text"
-                  placeholder="option Four"
+                  placeholder="option Four index (3)"
                   className="input input-bordered w-full"
                 />
               </div>
