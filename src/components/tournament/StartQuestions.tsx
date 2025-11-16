@@ -58,8 +58,8 @@ export default function StartQuiz({ data }: { data: Question[] }) {
   }, [data, dispatch]);
 
   return (
-    <div className='h-screen bg-backgroundHome bg-cover bg-center bg-no-repeat'>
-      <div className='flex justify-between items-center'></div>
+    <div className="h-screen bg-backgroundHome bg-cover bg-center bg-no-repeat">
+      <div className="flex justify-between items-center"></div>
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
@@ -69,19 +69,9 @@ export default function StartQuiz({ data }: { data: Question[] }) {
         {status === "active" && (
           <>
             <Question />
-            <Footer>
-              {/* <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} /> */}
+            {/* <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} /> */}
 
-              <p>
-                Question <strong>{index + 1}</strong> / {numQuestions}
-              </p>
-
-              <p>
-                <strong>{points}</strong> / {maxPossiblePoints}
-              </p>
-
-              <NextButton numQuestions={numQuestions} />
-            </Footer>
+            <NextButton numQuestions={numQuestions} />
           </>
         )}
         {status === "finished" && (

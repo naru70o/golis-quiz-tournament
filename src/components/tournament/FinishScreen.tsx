@@ -30,7 +30,7 @@ function FinishScreen({
   const majorId = question[0].majorId;
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center text-black">
       <p className="text-3xl font-bold mb-2">
         <span>{emoji}</span> You scored <strong>{points}</strong> out of{" "}
         {maxPossiblePoints} ({Math.ceil(percentage)}%)
