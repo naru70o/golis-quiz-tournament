@@ -6,28 +6,28 @@ function NextButton({
 }: {
   numQuestions: number; // total number of questions
 }) {
-  const {dispatch,index,answer} = useStoreState();
+  const { dispatch, index, answer } = useStoreState();
   if (answer === null) return null;
 
-  if (index < numQuestions - 1)
-    return (
-      <button
-        className="btn px-8"
-        onClick={() => dispatch(nextQuestion())}
-      >
-        Next
-      </button>
-    );
-
-  if (index === numQuestions - 1)
-    return (
-      <button
-        className="btn px-8"
-        onClick={() => dispatch(finishQuiz())}
-      >
-        finish
-      </button>
-    );
+  return (
+    <div className="flex justify-center">
+      {index < numQuestions - 1 ? (
+        <button
+          className="btn w-fit px-6"
+          onClick={() => dispatch(nextQuestion())}
+        >
+          Next
+        </button>
+      ) : index === numQuestions - 1 ? (
+        <button
+          className="btn w-fit px-6"
+          onClick={() => dispatch(finishQuiz())}
+        >
+          finish
+        </button>
+      ) : null}
+    </div>
+  );
 }
 
 export default NextButton;

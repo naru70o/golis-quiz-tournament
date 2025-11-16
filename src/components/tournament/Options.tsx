@@ -1,7 +1,7 @@
 "use client";
 import useStoreState from "@/hooks/useStoreState";
 import { newAnswer } from "@/state/quizSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const optionIdentifier = (index: number) => {
   if (index === 0) {
@@ -19,40 +19,70 @@ function Options() {
   const { questions, dispatch, answer, index: questionIndex } = useStoreState();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const hasAnswered = answer !== null;
-  console.log(
-    "answer ...",
-    `here is the index ${questionIndex}`,
-    questions[questionIndex]?.options
-  );
+
+  // When the current question changes, clear the local selectedIndex
+  useEffect(() => {
+    setSelectedIndex(null);
+  }, [questionIndex]);
+
+  // If the store has an answer (e.g. preloaded state), reflect it locally
+  useEffect(() => {
+    if (answer !== null) {
+      setSelectedIndex(answer);
+    }
+  }, [answer]);
+
   return (
-    <div className="grid grid-cols-2 gap-y-9 gap-x-32 mb-[3.2rem] container max-w-7xl mx-auto -translate-y-[20%]">
+    <div className="space-y-4 mb-10">
       {questions[questionIndex]?.options &&
         questions[questionIndex].options.map((option, optionIndex) => {
+          const isSelected = selectedIndex === optionIndex;
+          const isCorrect =
+            optionIndex === questions[questionIndex].correctOptionIndex;
+
+          // Determine styling based on answer state
+          let buttonStyle, circleStyle;
+
+          if (hasAnswered) {
+            if (isCorrect) {
+              // Correct answer - green
+              buttonStyle = "bg-green-500 text-white shadow-lg";
+              circleStyle = "bg-white text-green-500";
+            } else if (isSelected && !isCorrect) {
+              // Selected but incorrect - red
+              buttonStyle = "bg-red-500 text-white shadow-lg";
+              circleStyle = "bg-white text-red-500";
+            } else {
+              // Not selected and not correct
+              buttonStyle = "bg-white text-black";
+              circleStyle = "bg-[#ffccdd] text-[#ff6699]";
+            }
+          } else {
+            // Not answered yet
+            buttonStyle = isSelected
+              ? "bg-[#ff99cc] text-white shadow-lg"
+              : "bg-white text-black hover:shadow-md";
+            circleStyle = isSelected
+              ? "bg-white text-[#ff99cc]"
+              : "bg-[#ffccdd] text-[#ff6699]";
+          }
+
           return (
             <button
-              className={`bg-[#FBE726] text-black min-w-[300px] min-h-[108px] rounded-3xl relative  ${
-                hasAnswered
-                  ? optionIndex === questions[questionIndex].correctOptionIndex
-                    ? "bg-green-500 "
-                    : selectedIndex === optionIndex
-                    ? "bg-red-500 animate-pulse"
-                    : ""
-                  : ""
-              }
-            `}
               key={option._id}
               disabled={hasAnswered}
               onClick={() => {
                 setSelectedIndex(optionIndex);
                 dispatch(newAnswer(optionIndex));
               }}
+              className={`w-full max-w-4xl mx-auto p-5 rounded-lg font-medium text-lg transition-all flex items-center gap-4 ${buttonStyle}`}
             >
-              <div className="absolute flex items-center justify-center top-0 left-0 text-white text-center text-5xl font-bold bg-[#33479D] h-full w-[20%] rounded-3xl border-4 border-[#FBE726]">
-                <div className="">{optionIdentifier(optionIndex)}</div>
+              <div
+                className={`flex-shrink-0 w-10 h-10 rounded-full font-bold flex items-center justify-center ${circleStyle}`}
+              >
+                {optionIdentifier(optionIndex)}
               </div>
-              <div className="text-3xl text-center font-bold ml-[25%]">
-                {option.text}
-              </div>
+              <span className="text-left">{option.text}</span>
             </button>
           );
         })}
